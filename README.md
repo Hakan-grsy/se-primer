@@ -4,7 +4,8 @@ YZM301 ödevi. Oyuncunun seviyesine, rolüne ve hedefine uyum sağlayan, telefon
 
 ## Linkler
 - **Uygulama (AI Studio):** https://ai.studio/apps/af5726e6-29ac-45ee-b4fb-c9c934d50b2c
-- **Demo video (60 sn):** _eklenecek_
+- **GitHub repo:** https://github.com/Hakan-grsy/se-primer
+- **Demo video (55 sn, Cypress koşusu):** https://github.com/Hakan-grsy/se-primer/blob/main/e2e/cypress/videos/demo.cy.js.mp4
 
 ## Repo yapısı
 | Dosya / klasör | İçerik |
