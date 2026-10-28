@@ -1,0 +1,103 @@
+﻿
+> test:e2e
+> cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js
+
+
+
+DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-994e-ed64c9452c2b
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        14.5.4                                                                         │
+  │ Browser:        Electron 130 (headless)                                                        │
+  │ Node Version:   v24.13.1 (C:\Program Files\nodejs\node.exe)                                    │
+  │ Specs:          2 found (tum-yollar.cy.js, kabul-ornekleri.cy.js)                              │
+  │ Searched:       C:\Users\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\tum-yollar.cy.js, C:\Use │
+  │                 rs\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\kabul-ornekleri.cy.js          │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  tum-yollar.cy.js                                                                (1 of 2)
+
+
+  Tüm yollar (8 yol, 2 son)
+    √ AAA → İyi son (2603ms)
+    √ ABA → İyi son (1418ms)
+    √ BAA → İyi son (1378ms)
+    √ BBA → Kötü son (1386ms)
+    √ AAB → Kötü son (1406ms)
+    √ ABB → Kötü son (1372ms)
+    √ BAB → Kötü son (1327ms)
+    √ BBB → Kötü son (1357ms)
+
+
+  8 passing (12s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     12 seconds                                                                       │
+  │ Spec Ran:     tum-yollar.cy.js                                                                 │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  kabul-ornekleri.cy.js                                                           (2 of 2)
+
+
+  Kabul örnekleri
+    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1640ms)
+    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (781ms)
+    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (783ms)
+    √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (699ms)
+    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (1245ms)
+    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (1202ms)
+    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1362ms)
+    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1352ms)
+
+
+  8 passing (9s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     9 seconds                                                                        │
+  │ Spec Ran:     kabul-ornekleri.cy.js                                                            │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ √  tum-yollar.cy.js                         00:12        8        8        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ √  kabul-ornekleri.cy.js                    00:09        8        8        -        -        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    √  All specs passed!                        00:21       16       16        -        -        -  
+

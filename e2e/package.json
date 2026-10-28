@@ -1,0 +1,13 @@
+{
+  "name": "se-primer-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:e2e": "cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js",
+    "test:demo": "cypress run --spec cypress/e2e/demo.cy.js",
+    "cypress:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "14.5.4"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "SE Primer",
+  "description": "Yazılım Mühendisliği Kriz Simülasyonu - Laboratuvar Bilgi Sistemi Olayı",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

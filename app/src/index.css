@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-canvas: #0F1B33;
+    --bg-surface: #16264A;
+    --border-stroke: #2A3B63;
+    --accent-amber: #F5A23A;
+    --accent-green: #3CCB7F;
+    --accent-red: #F05454;
+  }
+
+  body {
+    background-color: #0F1B33;
+    color: #D8E2FF;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom scrollbar for mobile / sleek technical feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F1B33;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A3B63;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #F5A23A;
+}
+
+/* Blueprint subtle grid overlay if needed */
+.bg-blueprint-grid {
+  background-image: linear-gradient(to right, rgba(42, 59, 99, 0.25) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(42, 59, 99, 0.25) 1px, transparent 1px);
+  background-size: 20px 20px;
+}

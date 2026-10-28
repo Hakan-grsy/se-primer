@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.*
+!.env.example
+e2e/cypress/screenshots/
+dist/
+*.log
