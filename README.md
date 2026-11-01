@@ -7,7 +7,8 @@ YZM301 · Ödev 7. Geçen haftaki *SE Primer* oyununa (yanlış hastaya giden ta
 - **Hugging Face modeli (commit'e sabit):** https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/tree/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa
 - **Canlı uygulama (GitHub Pages):** https://hakan-grsy.github.io/se-primer/
   Model tarayıcıda çalışır ve Hugging Face'teki sabit commit'ten indirilir. Sunucusuz yayın olduğu için AI tutor ve veri toplama burada kapalıdır; ikisi de yerel kurulumda çalışır. (v1, AI Studio: https://ai.studio/apps/af5726e6-29ac-45ee-b4fb-c9c934d50b2c)
-- **Demo video (60–90 sn):** _eklenecek_
+- **Demo video (66 sn):** [e2e/cypress/videos/demo-v2-mobil.mp4](e2e/cypress/videos/demo-v2-mobil.mp4) _(YouTube linki eklenecek)_
+  Canlı sitede iki oyuncu aynı sahnelerden geçer. Ekrandaki risk değerleri modelden o an okunur. Video, bu sürümün sınırını da gösterir: Karar 2'de iki oyuncuya farklı risk hesaplanır (0.650 / 0.609), ama ikisi de eşiğin üstünde kaldığı için kart kararı aynıdır. Yeniden çekmek için: `npm --prefix e2e run test:demo2` (Cypress), sonra telefon ekranına kırpma (ffmpeg).
 
 ## Kurulum (3 komut)
 ```bash
@@ -65,6 +66,9 @@ npm --prefix e2e run test:e2e    # 24 test: 8 yol, 8 kabul örneği, 6 model reg
 - Veriyi uydurmak yerine gerçek oturum toplamaya karar verdim. Oyunları kendim ve 3 arkadaşım oynadık.
 - Deneme 1 ve 2 eşiği geçemeyince eşiği düşürmek yerine önce daha fazla veri toplamayı, sonra girdileri sadeleştirmeyi seçtim.
 
-**Elle düzelttiklerim** _(bu bölümü teslimden önce kendim dolduracağım)_:
-- _..._
-- _..._
+**Elle yaptıklarım ve düzelttiklerim:**
+- **Veri toplama:** 15 gerçek oturumu kendim oynadım, sonra 3 arkadaşıma oynattım. Bunu bir yapay zekâya uydurtmadım; `kaynak` sütunundaki her satır gerçek bir oyuna ait.
+- **Veri etiketi düzeltmesi:** O2 kodlu oturumların ikisini yanlışlıkla kendim oynadığımı fark edip bildirdim. Kontrol edince o iki oturumun zaten O1 (benim kodum) altında kaydedildiği görüldü, yani etiketler doğru çıktı ve veri sözlüğüne bu şekilde yazıldı.
+- **Hugging Face hesabı ve erişim anahtarı:** Girişi ve token oluşturmayı kendim yaptım. Anahtarı araca vermedim, yalnızca terminale girdim.
+- **Yön kararları:** Model eşiği geçemediğinde eşiği düşürmek yerine daha fazla veri toplamayı ve sonra sade modeli seçtim. Demo videosunda sınırı gizlemek yerine açıkça göstermeyi seçtim.
+- **Not:** Claude Code'un yazdığı kodu ve metinleri (README, RELEASE.md, SINAV_TASARIMI.md) satır satır elle düzeltmedim; okuyup onayladım. Düzeltme ve hata ayıklama, araca geri bildirim vererek yapıldı.
