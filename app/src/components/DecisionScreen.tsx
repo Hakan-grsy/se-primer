@@ -118,7 +118,7 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
       {/* Modelin ham çıktısı: parite testleri bunu okur */}
       {risk && (
         <span data-cy="p" data-testid="p-yanlis" hidden>
-          {risk.pYanlis.toFixed(6)}
+          {String(risk.pYanlis)}
         </span>
       )}
 

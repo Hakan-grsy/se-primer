@@ -1,0 +1,73 @@
+{
+  "aciklama": "Python (onnxruntime) referans olasılıkları. Tarayıcı aynı girdilerle 0.0001 toleransla aynı sonucu vermeli.",
+  "model_sha256": "4946970249c2983da0e6a46c26db4a5dbfdb11cc69b42cb132452f557a139fce",
+  "girdi_sirasi": [
+    "seviye_kod",
+    "karar_2",
+    "karar_3"
+  ],
+  "mudahale_esigi": 0.5,
+  "tolerans": 0.0001,
+  "durumlar": [
+    {
+      "ad": "yeni-k1",
+      "seviye": "Yeni başladım",
+      "karar_no": 1,
+      "girdi": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "p_yanlis": 0.20872167,
+      "mudahale": false
+    },
+    {
+      "ad": "yeni-k2",
+      "seviye": "Yeni başladım",
+      "karar_no": 2,
+      "girdi": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "p_yanlis": 0.64975178,
+      "mudahale": true
+    },
+    {
+      "ad": "biraz-k2",
+      "seviye": "Biraz deneyimim var",
+      "karar_no": 2,
+      "girdi": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "p_yanlis": 0.62982237,
+      "mudahale": true
+    },
+    {
+      "ad": "biraz-k3",
+      "seviye": "Biraz deneyimim var",
+      "karar_no": 3,
+      "girdi": [
+        1.0,
+        0.0,
+        1.0
+      ],
+      "p_yanlis": 0.22862187,
+      "mudahale": false
+    },
+    {
+      "ad": "deneyimli-k1",
+      "seviye": "Deneyimliyim",
+      "karar_no": 1,
+      "girdi": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "p_yanlis": 0.18158659,
+      "mudahale": false
+    }
+  ]
+}

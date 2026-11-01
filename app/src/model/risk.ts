@@ -62,14 +62,28 @@ export function girdiVektoru(config: ModelConfig, seviye: Level, kararNo: number
   });
 }
 
+// onnxruntime-web aynı oturumda iki run()'ı aynı anda kabul etmez (ör. React geliştirme
+// modunda efekt iki kez çalışınca). Bu yüzden çağrılar sıraya alınır.
+let sira: Promise<unknown> = Promise.resolve();
+
 // Ham girdi vektörüyle p_yanlis hesaplar (parite testleri de bunu kullanır).
-export async function olasilikHesapla(girdi: number[]): Promise<number | null> {
-  const m = await modeliYukle();
-  if (!m) return null;
-  const tensor = new ort.Tensor('float32', Float32Array.from(girdi), [1, girdi.length]);
-  const sonuc = await m.session.run({ [m.config.onnx.input]: tensor }, ['probabilities']);
-  const p = sonuc.probabilities.data as Float32Array;
-  return p[m.config.onnx.p_yanlis_sutunu];
+// Hata olursa null döner; oyun modelsiz devam eder.
+export function olasilikHesapla(girdi: number[]): Promise<number | null> {
+  const is = sira.then(async () => {
+    const m = await modeliYukle();
+    if (!m) return null;
+    try {
+      const tensor = new ort.Tensor('float32', Float32Array.from(girdi), [1, girdi.length]);
+      const sonuc = await m.session.run({ [m.config.onnx.input]: tensor }, ['probabilities']);
+      const p = sonuc.probabilities.data as Float32Array;
+      return p[m.config.onnx.p_yanlis_sutunu];
+    } catch (err) {
+      console.warn('Risk hesaplanamadı:', err);
+      return null;
+    }
+  });
+  sira = is.catch(() => undefined);
+  return is;
 }
 
 export interface RiskSonucu {
