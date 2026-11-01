@@ -203,7 +203,7 @@ Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler aras
 |---|---|---|---|---|---|---|
 | 1 | 1 Kasım 2026 | 24 gerçek oturum (72 satır), 2 oyuncu | **0.5318** | 0.245 / 0.231 | ✗ Eşik altı, model üretilmedi. İkinci koşu aynı sayıları verdi. | Model ve girdiler aynı kalır. Daha fazla gerçek veri toplanır (yeni oyuncular: O3, O4, …). |
 | 2 | 1 Kasım 2026 | 44 gerçek oturum (132 satır), 4 oyuncu | **0.5829** | 0.228 / 0.227 | ✗ Eşik altı, model üretilmedi. | Deneme 3: girdiler sadeleştirilir, eşik aynı kalır. |
-| 3 | 1 Kasım 2026 | Deneme 2 ile aynı veri | _eğitimden sonra yazılacak_ | | | |
+| 3 | 1 Kasım 2026 | Deneme 2 ile aynı veri | **0.6218** | 0.202 / 0.227 | ✓ Eşik geçildi. `model/` üretildi; ONNX–sklearn maks farkı 5.9e-08. İkinci koşu birebir aynı dosyaları üretti. | Yayına aday (v2.0). |
 
 **Deneme 1 yorumu:** Model, herkese aynı oranı veren taban modelden bile kötü (Brier 0.245 > 0.231). 72 satır, 5 girdili bir model için az. Model eğitim katlarındaki gürültüyü öğreniyor ve yeni oturumlara genellenemiyor. Eşiği düşürmek ya da girdileri sonuca bakarak değiştirmek yerine daha fazla gerçek veri toplamaya karar verildi.
 
@@ -214,3 +214,13 @@ Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler aras
 - **Değişmeyen:** Model türü (StandardScaler + LogisticRegression, tohum 42), değerlendirme yöntemi (oturuma göre gruplu 5 katlı CV, yalnızca gerçek veri), kabul eşiği (AUC ≥ 0.60) ve müdahale eşiği (0.50).
 - **Dürüstlük notu:** Bu sadeleştirme, Deneme 2'nin sonucuna ve veride Karar 2'nin belirgin şekilde zor olduğu gözlemine **bakılarak** seçildi. Aynı veride ikinci kez tasarım değiştirildiği için ölçülen AUC biraz iyimser olabilir. Modelin gerçek performansı, yeni oyunculardan gelecek veriyle yeniden ölçülmelidir.
 - **Beklenen davranış:** Model büyük ölçüde "Karar 2 diğerlerinden daha riskli" bilgisini taşır. Oyunda Selin kartı çoğunlukla Karar 2'de çıkacaktır. Bu, model kartında sınır olarak belirtilir.
+
+**Deneme 3 sonucu:** AUC 0.62, eşiğin hemen üstünde. Brier skoru ilk kez taban modelden iyi (0.202 < 0.227). Modelin tüm girdi kombinasyonlarındaki `p_yanlis` değerleri:
+
+| Seviye | Karar 1 | Karar 2 | Karar 3 |
+|---|---|---|---|
+| Yeni başladım | 0.209 | **0.650** | 0.244 |
+| Biraz deneyimim var | 0.195 | **0.630** | 0.229 |
+| Deneyimliyim | 0.182 | **0.609** | 0.214 |
+
+Müdahale eşiği 0.50 olduğu için Selin kartı **her seviyede yalnızca Karar 2'de** çıkar. Seviyenin etkisi küçüktür (katsayı −0.07): deneyim arttıkça risk biraz düşer, ama kartın çıkıp çıkmadığını değiştirmez. Yani model şu an oyuncuya göre kişiselleşmiyor, kararın zorluğuna göre tepki veriyor. Oyuncu davranışını yakalayan girdiler (önceki hatalar, süre, tereddüt), daha fazla veri toplandığında sonraki sürümde yeniden denenmelidir.

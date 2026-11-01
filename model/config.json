@@ -1,0 +1,80 @@
+{
+  "title": "SE Primer v2 — yanlış karar riski",
+  "description": "Oyuncunun bir karar ekranında yanlış seçim yapma olasılığı (p_yanlis). Yalnızca eğitim oyunu içindir; kişileri değerlendirmek için KULLANILMAZ.",
+  "target": "yanlis",
+  "class_labels": {
+    "0": "doğru karar",
+    "1": "yanlış karar"
+  },
+  "classes": [
+    "0",
+    "1"
+  ],
+  "onnx": {
+    "input": "input",
+    "outputs": [
+      "label",
+      "probabilities"
+    ],
+    "p_yanlis_sutunu": 1
+  },
+  "features": [
+    {
+      "name": "seviye_kod",
+      "label": "Seviye (0 = Yeni başladım, 1 = Biraz deneyimim var, 2 = Deneyimliyim)",
+      "example": 0.0
+    },
+    {
+      "name": "karar_2",
+      "label": "Karar 2 mi? (0/1)",
+      "example": 1.0
+    },
+    {
+      "name": "karar_3",
+      "label": "Karar 3 mü? (0/1)",
+      "example": 0.0
+    }
+  ],
+  "seviye_kod": {
+    "Yeni başladım": 0,
+    "Biraz deneyimim var": 1,
+    "Deneyimliyim": 2
+  },
+  "mudahale_esigi": 0.5,
+  "kabul": {
+    "metric": "roc_auc_cv",
+    "min": 0.6,
+    "kat_sayisi": 5,
+    "yontem": "GroupKFold (oturum_id), yalnızca kaynak=gercek"
+  },
+  "metrics": {
+    "roc_auc_cv": 0.6218,
+    "brier_cv": 0.2021,
+    "brier_taban": 0.227,
+    "dogruluk_cv_esik_0_5": 0.7424,
+    "mudahale_orani_cv": 0.3333
+  },
+  "katsayilar_olcekli": {
+    "seviye_kod": -0.0663,
+    "karar_2": 0.9195,
+    "karar_3": 0.0957
+  },
+  "veri": {
+    "dosya": "data/oturumlar.csv",
+    "gercek_satir": 132,
+    "sentetik_satir": 0,
+    "gercek_oturum": 44,
+    "oyuncular": [
+      "O1",
+      "O2",
+      "O3",
+      "O4"
+    ],
+    "oyuncu_sayisi": 4,
+    "yanlis_orani": 0.3485
+  },
+  "deneme": 3,
+  "seed": 42,
+  "sklearn_version": "1.9.1",
+  "python_version": "3.12"
+}
