@@ -190,7 +190,7 @@ stateDiagram-v2
 | **K8** | `tests/parite.json` içindeki 5 referans girdi | Aynı `model.onnx` hem Python'da (oracle) hem tarayıcıda (`onnxruntime-web`) çalıştırılır | Her girdi için iki olasılık arasındaki fark **< 1e-4**. |
 
 ### 9.5 Bilinen sınırlar
-- Veri **yalnızca iki oyuncudan** geliyor (O1: 17 oturum, O2: 7 oturum; toplam 24 oturum, 72 satır). Model bu iki kişinin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
+- Veri **yalnızca dört oyuncudan** geliyor (O1: 17, O2: 7, O3: 10, O4: 10 oturum; toplam 44 oturum, 132 satır). Model bu kişilerin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
 - Bazı durumlar veride az: süre 2 oturumda doldu (6 karar), tutor'a 6 kararda soru soruldu, "İpucu iste" düğmesi 4 kararda kullanıldı.
 - Model bir eğitim oyunu içindir. Gerçek bir kişiyi değerlendirmek ya da notlandırmak için kullanılmamalıdır.
 
@@ -200,5 +200,8 @@ Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler aras
 | # | Tarih | Veri | ROC AUC (CV) | Brier (CV / taban) | Sonuç | Karar |
 |---|---|---|---|---|---|---|
 | 1 | 1 Kasım 2026 | 24 gerçek oturum (72 satır), 2 oyuncu | **0.5318** | 0.245 / 0.231 | ✗ Eşik altı, model üretilmedi. İkinci koşu aynı sayıları verdi. | Model ve girdiler aynı kalır. Daha fazla gerçek veri toplanır (yeni oyuncular: O3, O4, …). |
+| 2 | 1 Kasım 2026 | 44 gerçek oturum (132 satır), 4 oyuncu | **0.5829** | 0.228 / 0.227 | ✗ Eşik altı, model üretilmedi. | Karar bekliyor (bkz. aşağıdaki yorum). |
 
 **Deneme 1 yorumu:** Model, herkese aynı oranı veren taban modelden bile kötü (Brier 0.245 > 0.231). 72 satır, 5 girdili bir model için az. Model eğitim katlarındaki gürültüyü öğreniyor ve yeni oturumlara genellenemiyor. Eşiği düşürmek ya da girdileri sonuca bakarak değiştirmek yerine daha fazla gerçek veri toplamaya karar verildi.
+
+**Deneme 2 yorumu:** Veri neredeyse iki katına çıkınca AUC 0.53'ten 0.58'e yükseldi, ama eşik geçilemedi. Model hâlâ taban modelle aynı düzeyde (Brier 0.228 ≈ 0.227). Veride yanlış kararların büyük kısmı Karar 2'de (Karar 1: 8/44, Karar 2: 28/44, Karar 3: 10/44). Bu güçlü örüntüye rağmen modelin düşük kalması, diğer girdilerin (özellikle süresi dolan oyunlarda 60 sn'ye fırlayan `onceki_ort_sure_sn`) gürültü eklediğini düşündürüyor. Bu gözlem **veriye bakılarak** yapıldı. Girdiler bu gözleme göre değiştirilirse, bu durum deneme kaydında açıkça belirtilmelidir.

@@ -28,7 +28,8 @@ Veri, oyunun veri toplama modunda (`http://localhost:3000/?veri=1`) oyun oynanı
 - Veri toplama modu yalnızca yerel geliştirme sunucusunda çalışır. Yayındaki uygulamada (`NODE_ENV=production`) `/api/oturum` uç noktası kapalıdır.
 
 ## Toplama bilgisi
-- **Toplam:** 24 gerçek oturum (72 satır), 2 oyuncu, Kasım 2026.
+- **Toplam:** 44 gerçek oturum (132 satır), 4 oyuncu, Kasım 2026.
+- **O3, O4 (iki kişi):** 10'ar oturum (30'ar satır). Kararların çoğu 1 saniyenin altında verildi; bu oyuncular oyunu hızlı tıklayarak oynadı.
 - **O1 (ödev sahibi):** 17 oturum (51 satır). İlk 15 oturum `oyuncu_kodu` sütunu eklenmeden önce oynandı; bu 45 satır sonradan O1 olarak işaretlendi.
 - **O2 (bir arkadaş):** 7 oturum (21 satır). O1'in verisindeki boşlukları kapatması istendi: süre dolması, "İpucu iste" düğmesi, tutor'a soru, yavaş oynama.
 - Oyuncular, çeşitlilik için farklı seviye / rol / hedef kombinasyonları ve farklı oynama tarzları denedi.
