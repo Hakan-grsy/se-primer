@@ -7,6 +7,7 @@ interface AiTutorProps {
   optionATitle: string;
   optionBTitle: string;
   goal: Goal;
+  onUserMessage?: () => void;
 }
 
 export const AiTutor: React.FC<AiTutorProps> = ({
@@ -14,6 +15,7 @@ export const AiTutor: React.FC<AiTutorProps> = ({
   optionATitle,
   optionBTitle,
   goal,
+  onUserMessage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -43,6 +45,7 @@ export const AiTutor: React.FC<AiTutorProps> = ({
     const textToSend = (questionText || inputVal).trim();
     if (!textToSend || isLoading) return;
 
+    onUserMessage?.();
     setErrorNotice(null);
 
     const userMsg: ChatMessage = {

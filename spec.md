@@ -149,3 +149,78 @@ stateDiagram-v2
 1. **Giriş ekranı:** başlık, kısa tanıtım, 3 soru (seçim kartları), "Başla" düğmesi.
 2. **Sahne ekranı:** saat göstergesi, hikâye metni, 2 seçenek düğmesi, ipucu kartı / sayaç, tutor sohbet alanı. Seçim sonrası aynı ekranda "Ne oldu? / Neden oldu?" paneli açılır.
 3. **Son ekranı:** İyi / Kötü son metni, her kararın özeti (✅/❌), hedefe göre "Öğrendiklerin", "Tekrar oyna" düğmesi.
+
+---
+
+## 9. Model (v2) — Yanlış karar riski
+
+> Bu bölüm **eğitimden önce** yazıldı ve eşikler eğitim sonucuna göre değiştirilmez. Eşiği geçemeyen model yayınlanmaz.
+
+### 9.1 Model gereksinimi
+- **Soru:** *"Oyuncu bu karar ekranına geldiğinde, bu kararı yanlış verme olasılığı nedir?"*
+- **Çıktı:** `p_yanlis` ∈ [0, 1].
+- **Oyuna etkisi:** Karar ekranı açılırken model bir kez çalışır. `p_yanlis ≥ 0.50` (müdahale eşiği, `config.json` içinde) ise ekranın üstünde **"Kıdemli meslektaşın Selin arıyor"** kartı çıkar ve o karara özel kısa bir uyarı verir. Uyarı, tutor kuralına uyar: doğru seçeneği söylemez, düşündürür. Eşiğin altında kart çıkmaz ve hikâye v1'deki gibi devam eder.
+- **Neden ekran açılırken?** Karar süresi ve tereddüt, oyuncu seçim yapana kadar tamamlanmaz. Bu yüzden model yalnızca **ekran açıldığı anda bilinen** girdileri kullanır. Eğitimde de aynı girdiler kullanılır, böylece eğitim ile kullanım arasında fark (train/serve skew) oluşmaz.
+- **Model:** Lojistik regresyon (`scikit-learn`), `random_state=42`. Veri az (72 satır) olduğu için az girdili, yorumlanabilir bir model seçildi.
+
+### 9.2 Girdiler (sırası `config.json` ile sabitlenir)
+| # | Girdi | Nasıl hesaplanır | Deneme 1–2 | Deneme 3 |
+|---|---|---|---|---|
+| 1 | `seviye_kod` | Yeni başladım = 0, Biraz deneyimim var = 1, Deneyimliyim = 2 | ✓ | ✓ |
+| 2 | `karar_2` | Karar 2 ise 1, değilse 0 | ✓ | ✓ |
+| 3 | `karar_3` | Karar 3 ise 1, değilse 0 | ✓ | ✓ |
+| 4 | `onceki_yanlis_sayisi` | Bu oturumda önceki kararlardaki yanlış sayısı | ✓ | — |
+| 5 | `onceki_ort_sure_sn` | Önceki kararların ortalama süresi (Karar 1'de 0) | ✓ | — |
+
+Deneme 3'te girdi 4 ve 5 çıkarıldı. Gerekçe ve bu kararın veriye bakılarak verildiği bilgisi §9.6'dadır.
+
+`rol` ve `hedef` girdi değildir: v1 spesifikasyonuna göre bunlar yalnızca anlatıyı ve tutor'u değiştirir, kararları değiştirmez (bkz. §4). Ölçülen ama girdi olmayan sütunlar (`karar_suresi_sn`, `tereddut_sayisi` vb.) veri setinde kalır ve sonraki sürümler için saklanır.
+
+### 9.3 Değerlendirme metriği ve kabul eşiği (altın standart)
+- **Metrik:** ROC AUC. Pozitif sınıf `dogru_mu = 0` (yanlış karar).
+- **Ölçüm yöntemi:** `oturum_id`'ye göre gruplu 5 katlı çapraz doğrulama (`GroupKFold`). Aynı oturumun 3 kararı hep aynı katta kalır, böylece model bir oturumu hem eğitimde hem testte görmez.
+- **Kabul eşiği: AUC ≥ 0.60.** 0.50, yazı tura atmaktır. İki kişiden gelen 72 satırlık veride 0.60, "modelin rastgeleden anlamlı biçimde iyi olduğu" için gerçekçi bir alt sınırdır.
+- **AUC yalnızca `kaynak = gercek` satırlarla ölçülür.** Sentetik veri eklenirse yalnızca eğitimde kullanılır. Sentetik veriyle ölçüm, modeli kendi üretim kurallarımızı öğrendiği için yapay olarak iyi gösterir.
+- **Bilgi amaçlı (eşik değil):** Brier skoru, tüm oyunculara aynı oranı (veri setindeki yanlış oranı) veren taban modelle birlikte raporlanır.
+- `train.py` AUC < 0.60 bulursa **hata kodu ile durur** ve `model.onnx` üretmez.
+
+### 9.4 Kabul örnekleri (v2)
+| # | Verilen (Given) | Olay (When) | Beklenen (Then) |
+|---|---|---|---|
+| **K6** | Model bir karar için `p_yanlis = 0.62` döndürüyor, müdahale eşiği 0.50 | Karar ekranı açılır | "Kıdemli meslektaşın Selin arıyor" kartı **görünür**. Uyarı metni "A", "B" ya da "doğru cevap" ifadelerini **içermez**. |
+| **K7** | Model bir karar için `p_yanlis = 0.31` döndürüyor | Karar ekranı açılır | Kart **görünmez**, ekran v1'deki gibidir. |
+| **K8** | `tests/parite.json` içindeki 5 referans girdi | Aynı `model.onnx` hem Python'da (oracle) hem tarayıcıda (`onnxruntime-web`) çalıştırılır | Her girdi için iki olasılık arasındaki fark **< 1e-4**. |
+
+### 9.5 Bilinen sınırlar
+- Veri **yalnızca dört oyuncudan** geliyor (O1: 17, O2: 7, O3: 10, O4: 10 oturum; toplam 44 oturum, 132 satır). Model bu kişilerin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
+- Bazı durumlar veride az: süre 2 oturumda doldu (6 karar), tutor'a 6 kararda soru soruldu, "İpucu iste" düğmesi 4 kararda kullanıldı.
+- Model bir eğitim oyunu içindir. Gerçek bir kişiyi değerlendirmek ya da notlandırmak için kullanılmamalıdır.
+
+### 9.6 Eğitim günlüğü
+Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler arasında değiştirilmez.
+
+| # | Tarih | Veri | ROC AUC (CV) | Brier (CV / taban) | Sonuç | Karar |
+|---|---|---|---|---|---|---|
+| 1 | 1 Kasım 2026 | 24 gerçek oturum (72 satır), 2 oyuncu | **0.5318** | 0.245 / 0.231 | ✗ Eşik altı, model üretilmedi. İkinci koşu aynı sayıları verdi. | Model ve girdiler aynı kalır. Daha fazla gerçek veri toplanır (yeni oyuncular: O3, O4, …). |
+| 2 | 1 Kasım 2026 | 44 gerçek oturum (132 satır), 4 oyuncu | **0.5829** | 0.228 / 0.227 | ✗ Eşik altı, model üretilmedi. | Deneme 3: girdiler sadeleştirilir, eşik aynı kalır. |
+| 3 | 1 Kasım 2026 | Deneme 2 ile aynı veri | **0.6218** | 0.202 / 0.227 | ✓ Eşik geçildi. `model/` üretildi; ONNX–sklearn maks farkı 5.9e-08. İkinci koşu birebir aynı dosyaları üretti. | Yayına aday (v2.0). |
+
+**Deneme 1 yorumu:** Model, herkese aynı oranı veren taban modelden bile kötü (Brier 0.245 > 0.231). 72 satır, 5 girdili bir model için az. Model eğitim katlarındaki gürültüyü öğreniyor ve yeni oturumlara genellenemiyor. Eşiği düşürmek ya da girdileri sonuca bakarak değiştirmek yerine daha fazla gerçek veri toplamaya karar verildi.
+
+**Deneme 2 yorumu:** Veri neredeyse iki katına çıkınca AUC 0.53'ten 0.58'e yükseldi, ama eşik geçilemedi. Model hâlâ taban modelle aynı düzeyde (Brier 0.228 ≈ 0.227). Veride yanlış kararların büyük kısmı Karar 2'de (Karar 1: 8/44, Karar 2: 28/44, Karar 3: 10/44). Bu güçlü örüntüye rağmen modelin düşük kalması, diğer girdilerin (özellikle süresi dolan oyunlarda 60 sn'ye fırlayan `onceki_ort_sure_sn`) gürültü eklediğini düşündürüyor. Bu gözlem **veriye bakılarak** yapıldı. Girdiler bu gözleme göre değiştirilirse, bu durum deneme kaydında açıkça belirtilmelidir.
+
+**Deneme 3 tasarımı (eğitimden önce yazıldı):**
+- **Değişen:** Girdiler `seviye_kod`, `karar_2`, `karar_3` olarak sadeleştirildi (§9.2). `onceki_yanlis_sayisi` ve `onceki_ort_sure_sn` çıkarıldı.
+- **Değişmeyen:** Model türü (StandardScaler + LogisticRegression, tohum 42), değerlendirme yöntemi (oturuma göre gruplu 5 katlı CV, yalnızca gerçek veri), kabul eşiği (AUC ≥ 0.60) ve müdahale eşiği (0.50).
+- **Dürüstlük notu:** Bu sadeleştirme, Deneme 2'nin sonucuna ve veride Karar 2'nin belirgin şekilde zor olduğu gözlemine **bakılarak** seçildi. Aynı veride ikinci kez tasarım değiştirildiği için ölçülen AUC biraz iyimser olabilir. Modelin gerçek performansı, yeni oyunculardan gelecek veriyle yeniden ölçülmelidir.
+- **Beklenen davranış:** Model büyük ölçüde "Karar 2 diğerlerinden daha riskli" bilgisini taşır. Oyunda Selin kartı çoğunlukla Karar 2'de çıkacaktır. Bu, model kartında sınır olarak belirtilir.
+
+**Deneme 3 sonucu:** AUC 0.62, eşiğin hemen üstünde. Brier skoru ilk kez taban modelden iyi (0.202 < 0.227). Modelin tüm girdi kombinasyonlarındaki `p_yanlis` değerleri:
+
+| Seviye | Karar 1 | Karar 2 | Karar 3 |
+|---|---|---|---|
+| Yeni başladım | 0.209 | **0.650** | 0.244 |
+| Biraz deneyimim var | 0.195 | **0.630** | 0.229 |
+| Deneyimliyim | 0.182 | **0.609** | 0.214 |
+
+Müdahale eşiği 0.50 olduğu için Selin kartı **her seviyede yalnızca Karar 2'de** çıkar. Seviyenin etkisi küçüktür (katsayı −0.07): deneyim arttıkça risk biraz düşer, ama kartın çıkıp çıkmadığını değiştirmez. Yani model şu an oyuncuya göre kişiselleşmiyor, kararın zorluğuna göre tepki veriyor. Oyuncu davranışını yakalayan girdiler (önceki hatalar, süre, tereddüt), daha fazla veri toplandığında sonraki sürümde yeniden denenmelidir.

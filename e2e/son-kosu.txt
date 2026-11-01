@@ -1,10 +1,10 @@
-﻿
+
 > test:e2e
-> cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js
+> cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js,cypress/e2e/model-regresyon.cy.js,cypress/e2e/parite.cy.js
 
 
 
-DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-994e-ed64c9452c2b
+DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b0b4-a12472c3dfd2
 
 ====================================================================================================
 
@@ -14,29 +14,32 @@ DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-9
   │ Cypress:        14.5.4                                                                         │
   │ Browser:        Electron 130 (headless)                                                        │
   │ Node Version:   v24.13.1 (C:\Program Files\nodejs\node.exe)                                    │
-  │ Specs:          2 found (tum-yollar.cy.js, kabul-ornekleri.cy.js)                              │
+  │ Specs:          4 found (tum-yollar.cy.js, kabul-ornekleri.cy.js, model-regresyon.cy.js, parit │
+  │                 e.cy.js)                                                                       │
   │ Searched:       C:\Users\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\tum-yollar.cy.js, C:\Use │
-  │                 rs\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\kabul-ornekleri.cy.js          │
+  │                 rs\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\kabul-ornekleri.cy.js, C:\User │
+  │                 s\hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\model-regresyon.cy.js, C:\Users │
+  │                 \hakan\Desktop\SE-Primer-Odev\e2e\cypress\e2e\parite.cy.js                     │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 
 ────────────────────────────────────────────────────────────────────────────────────────────────────
                                                                                                     
-  Running:  tum-yollar.cy.js                                                                (1 of 2)
+  Running:  tum-yollar.cy.js                                                                (1 of 4)
 
 
   Tüm yollar (8 yol, 2 son)
-    √ AAA → İyi son (2603ms)
-    √ ABA → İyi son (1418ms)
-    √ BAA → İyi son (1378ms)
-    √ BBA → Kötü son (1386ms)
-    √ AAB → Kötü son (1406ms)
-    √ ABB → Kötü son (1372ms)
-    √ BAB → Kötü son (1327ms)
-    √ BBB → Kötü son (1357ms)
+    √ AAA → İyi son (2117ms)
+    √ ABA → İyi son (1306ms)
+    √ BAA → İyi son (1247ms)
+    √ BBA → Kötü son (1215ms)
+    √ AAB → Kötü son (1192ms)
+    √ ABB → Kötü son (1201ms)
+    √ BAB → Kötü son (1134ms)
+    √ BBB → Kötü son (1099ms)
 
 
-  8 passing (12s)
+  8 passing (11s)
 
 
   (Results)
@@ -49,28 +52,28 @@ DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-9
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     12 seconds                                                                       │
+  │ Duration:     10 seconds                                                                       │
   │ Spec Ran:     tum-yollar.cy.js                                                                 │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 
 ────────────────────────────────────────────────────────────────────────────────────────────────────
                                                                                                     
-  Running:  kabul-ornekleri.cy.js                                                           (2 of 2)
+  Running:  kabul-ornekleri.cy.js                                                           (2 of 4)
 
 
   Kabul örnekleri
-    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1640ms)
-    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (781ms)
-    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (783ms)
-    √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (699ms)
-    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (1245ms)
-    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (1202ms)
-    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1362ms)
-    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1352ms)
+    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1339ms)
+    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (616ms)
+    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (572ms)
+    √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (572ms)
+    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (991ms)
+    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (978ms)
+    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1093ms)
+    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1192ms)
 
 
-  8 passing (9s)
+  8 passing (8s)
 
 
   (Results)
@@ -83,8 +86,70 @@ DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-9
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     9 seconds                                                                        │
+  │ Duration:     7 seconds                                                                        │
   │ Spec Ran:     kabul-ornekleri.cy.js                                                            │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  model-regresyon.cy.js                                                           (3 of 4)
+
+
+  v2 risk modeli: Selin kartı (K6, K7)
+    √ yeni-basladim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (5555ms)
+    √ biraz-deneyimim-var: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (4717ms)
+    √ deneyimliyim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (4198ms)
+
+  v2 risk modeli: hata durumları
+    √ model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır (1150ms)
+    √ geri dönüş anahtarı: model kapalıyken model indirilmez, oyun v1 gibi biter (1160ms)
+    √ veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK) (1114ms)
+
+
+  6 passing (18s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        6                                                                                │
+  │ Passing:      6                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     18 seconds                                                                       │
+  │ Spec Ran:     model-regresyon.cy.js                                                            │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  parite.cy.js                                                                    (4 of 4)
+
+
+  Parite: Python (oracle) ile tarayıcı aynı olasılığı veriyor
+    √ tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256) (1074ms)
+    √ 5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı (18502ms)
+
+
+  2 passing (20s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        2                                                                                │
+  │ Passing:      2                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     19 seconds                                                                       │
+  │ Spec Ran:     parite.cy.js                                                                     │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
 
@@ -95,9 +160,13 @@ DevTools listening on ws://127.0.0.1:60378/devtools/browser/4cfc9cd7-53f5-4405-9
 
        Spec                                              Tests  Passing  Failing  Pending  Skipped  
   ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ √  tum-yollar.cy.js                         00:12        8        8        -        -        - │
+  │ √  tum-yollar.cy.js                         00:10        8        8        -        -        - │
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ √  kabul-ornekleri.cy.js                    00:09        8        8        -        -        - │
+  │ √  kabul-ornekleri.cy.js                    00:07        8        8        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ √  model-regresyon.cy.js                    00:18        6        6        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ √  parite.cy.js                             00:19        2        2        -        -        - │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
-    √  All specs passed!                        00:21       16       16        -        -        -  
+    √  All specs passed!                        00:56       24       24        -        -        -  
 

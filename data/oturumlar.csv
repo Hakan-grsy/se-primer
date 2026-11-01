@@ -1,0 +1,133 @@
+oturum_id,kaynak,oyuncu_kodu,seviye,rol,hedef,karar_no,onceki_yanlis_sayisi,onceki_ort_sure_sn,karar_suresi_sn,ipucu_acildi,tereddut_sayisi,tutor_mesaj_sayisi,zaman_asimi,secim,dogru_mu
+o-32b154e6,gercek,O1,Yeni başladım,Backend geliştirici,Hata ayıklama,1,0,0,5,1,2,0,0,B,0
+o-32b154e6,gercek,O1,Yeni başladım,Backend geliştirici,Hata ayıklama,2,1,5,11,1,1,0,0,A,1
+o-32b154e6,gercek,O1,Yeni başladım,Backend geliştirici,Hata ayıklama,3,1,8,2.3,1,0,0,0,B,0
+o-73160ccf,gercek,O1,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,1,0,0,1.1,0,1,0,0,A,1
+o-73160ccf,gercek,O1,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,2,0,1.1,1.5,0,1,0,0,A,1
+o-73160ccf,gercek,O1,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,3,0,1.3,1.9,0,1,0,0,A,1
+o-2654f710,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,1,0,0,8.6,0,3,0,0,A,1
+o-2654f710,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,2,0,8.6,0.8,0,0,0,0,B,0
+o-2654f710,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,3,1,4.7,1,0,0,0,0,A,1
+o-af0fbbb7,gercek,O1,Yeni başladım,Test (QA) mühendisi,Test ve kalite,1,0,0,1.2,1,2,0,0,B,0
+o-af0fbbb7,gercek,O1,Yeni başladım,Test (QA) mühendisi,Test ve kalite,2,1,1.2,1.1,1,0,0,0,B,0
+o-af0fbbb7,gercek,O1,Yeni başladım,Test (QA) mühendisi,Test ve kalite,3,2,1.2,1.6,1,0,0,0,B,0
+o-3ff75dd6,gercek,O1,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,1,0,0,1.1,0,1,0,0,A,1
+o-3ff75dd6,gercek,O1,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,2,0,1.1,0.6,0,0,0,0,B,0
+o-3ff75dd6,gercek,O1,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,3,1,0.9,0.5,0,1,0,0,A,1
+o-550b4733,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,1,0,0,1,0,1,0,0,A,1
+o-550b4733,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,2,0,1,1.2,0,0,0,0,B,0
+o-550b4733,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,3,1,1.1,0.8,0,1,0,0,A,1
+o-567afe46,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,1,0,0,0.7,0,1,0,0,A,1
+o-567afe46,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,2,0,0.7,0.9,0,0,0,0,B,0
+o-567afe46,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,3,1,0.8,1.1,0,1,0,0,A,1
+o-87578636,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,1,0,0,11.5,0,0,3,0,B,0
+o-87578636,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,2,1,11.5,3.4,0,1,0,0,A,1
+o-87578636,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,3,1,7.5,1.1,0,1,0,0,A,1
+o-7b4ba808,gercek,O1,Deneyimliyim,Takım lideri,Hata ayıklama,1,0,0,0.8,0,1,0,0,A,1
+o-7b4ba808,gercek,O1,Deneyimliyim,Takım lideri,Hata ayıklama,2,0,0.8,0.5,0,0,0,0,B,0
+o-7b4ba808,gercek,O1,Deneyimliyim,Takım lideri,Hata ayıklama,3,1,0.7,0.4,0,0,0,0,B,0
+o-1d4c3b6d,gercek,O1,Biraz deneyimim var,Takım lideri,Hata ayıklama,1,0,0,0.5,0,1,0,0,A,1
+o-1d4c3b6d,gercek,O1,Biraz deneyimim var,Takım lideri,Hata ayıklama,2,0,0.5,1.2,0,1,0,0,A,1
+o-1d4c3b6d,gercek,O1,Biraz deneyimim var,Takım lideri,Hata ayıklama,3,0,0.9,0.7,0,1,0,0,A,1
+o-fec6df6c,gercek,O1,Yeni başladım,Takım lideri,Test ve kalite,1,0,0,0.8,1,1,0,0,A,1
+o-fec6df6c,gercek,O1,Yeni başladım,Takım lideri,Test ve kalite,2,0,0.8,0.7,1,1,0,0,A,1
+o-fec6df6c,gercek,O1,Yeni başladım,Takım lideri,Test ve kalite,3,0,0.8,0.7,1,1,0,0,A,1
+o-39fa1b26,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,1,0,0,0.5,0,1,0,0,A,1
+o-39fa1b26,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,2,0,0.5,0.8,0,0,0,0,B,0
+o-39fa1b26,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,3,1,0.7,0.5,0,1,0,0,A,1
+o-8b07c9dc,gercek,O1,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,1,0,0,0.6,0,1,0,0,A,1
+o-8b07c9dc,gercek,O1,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,2,0,0.6,0.6,0,1,0,0,A,1
+o-8b07c9dc,gercek,O1,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,3,0,0.6,0.6,0,1,0,0,A,1
+o-51eeb4f2,gercek,O1,Yeni başladım,Takım lideri,Hata ayıklama,1,0,0,0.7,1,1,0,0,A,1
+o-51eeb4f2,gercek,O1,Yeni başladım,Takım lideri,Hata ayıklama,2,0,0.7,0.7,1,1,0,0,A,1
+o-51eeb4f2,gercek,O1,Yeni başladım,Takım lideri,Hata ayıklama,3,0,0.7,0.9,1,1,0,0,A,1
+o-dc54f394,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,1,0,0,0.7,0,1,0,0,A,1
+o-dc54f394,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,2,0,0.7,0.5,0,0,0,0,B,0
+o-dc54f394,gercek,O1,Biraz deneyimim var,Takım lideri,Veri güvenliği ve KVKK,3,1,0.6,0.5,0,1,0,0,A,1
+o-e81a56f0,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,1,0,0,60,0,2,0,1,B,0
+o-e81a56f0,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,2,1,60,60,0,0,0,1,B,0
+o-e81a56f0,gercek,O1,Deneyimliyim,Backend geliştirici,Hata ayıklama,3,2,60,60.9,0,0,0,1,B,0
+o-6d6ef022,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,1,0,0,4.7,0,1,1,0,A,1
+o-6d6ef022,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,2,0,4.7,3.7,0,0,0,0,B,0
+o-6d6ef022,gercek,O1,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,3,1,4.2,24.2,0,3,2,0,A,1
+o-b54d0551,gercek,O2,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,1,0,0,4.5,0,1,1,0,A,1
+o-b54d0551,gercek,O2,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,2,0,4.5,0.9,0,2,0,0,B,0
+o-b54d0551,gercek,O2,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,3,1,2.7,4.3,0,10,0,0,A,1
+o-cda0efb7,gercek,O2,Deneyimliyim,Takım lideri,Test ve kalite,1,0,0,4.8,0,1,1,0,A,1
+o-cda0efb7,gercek,O2,Deneyimliyim,Takım lideri,Test ve kalite,2,0,4.8,1.7,0,1,0,0,A,1
+o-cda0efb7,gercek,O2,Deneyimliyim,Takım lideri,Test ve kalite,3,0,3.3,1.7,0,1,0,0,A,1
+o-3ab4b308,gercek,O2,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,1,0,0,5,1,1,0,0,A,1
+o-3ab4b308,gercek,O2,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,2,0,5,3.4,1,0,0,0,B,0
+o-3ab4b308,gercek,O2,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,3,1,4.2,1.5,1,0,0,0,B,0
+o-24a3b5b4,gercek,O2,Biraz deneyimim var,Backend geliştirici,Veri güvenliği ve KVKK,1,0,0,2.9,1,1,0,0,A,1
+o-24a3b5b4,gercek,O2,Biraz deneyimim var,Backend geliştirici,Veri güvenliği ve KVKK,2,0,2.9,2.8,1,1,0,0,A,1
+o-24a3b5b4,gercek,O2,Biraz deneyimim var,Backend geliştirici,Veri güvenliği ve KVKK,3,0,2.8,1.8,1,1,0,0,A,1
+o-835271b3,gercek,O2,Deneyimliyim,Backend geliştirici,Test ve kalite,1,0,0,60,0,0,0,1,B,0
+o-835271b3,gercek,O2,Deneyimliyim,Backend geliştirici,Test ve kalite,2,1,60,60,0,0,0,1,B,0
+o-835271b3,gercek,O2,Deneyimliyim,Backend geliştirici,Test ve kalite,3,2,60,60,0,0,0,1,B,0
+o-ba99dc34,gercek,O2,Deneyimliyim,Test (QA) mühendisi,Test ve kalite,1,0,0,1.7,0,1,0,0,B,0
+o-ba99dc34,gercek,O2,Deneyimliyim,Test (QA) mühendisi,Test ve kalite,2,1,1.7,0.6,0,1,0,0,A,1
+o-ba99dc34,gercek,O2,Deneyimliyim,Test (QA) mühendisi,Test ve kalite,3,1,1.2,0.5,0,1,0,0,A,1
+o-00ebadfb,gercek,O2,Biraz deneyimim var,Takım lideri,Test ve kalite,1,0,0,1.6,1,3,0,0,A,1
+o-00ebadfb,gercek,O2,Biraz deneyimim var,Takım lideri,Test ve kalite,2,0,1.6,3.6,0,1,1,0,A,1
+o-00ebadfb,gercek,O2,Biraz deneyimim var,Takım lideri,Test ve kalite,3,0,2.6,1.4,0,0,0,0,B,0
+o-dc5637dc,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,1,0,0,0.5,1,1,0,0,A,1
+o-dc5637dc,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,2,0,0.5,0.4,1,0,0,0,B,0
+o-dc5637dc,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,3,1,0.5,0.4,1,1,0,0,A,1
+o-5e3e5cc3,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,1,0,0,0.6,0,1,0,0,A,1
+o-5e3e5cc3,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,2,0,0.6,0.5,0,0,0,0,B,0
+o-5e3e5cc3,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,3,1,0.6,0.5,0,1,0,0,A,1
+o-e2da8b07,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,1,0,0,1.5,1,0,0,0,B,0
+o-e2da8b07,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,2,1,1.5,0.3,1,0,0,0,B,0
+o-e2da8b07,gercek,O3,Yeni başladım,Takım lideri,Veri güvenliği ve KVKK,3,2,0.9,3.3,1,4,1,0,B,0
+o-752fe5b9,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,1,0,0,2,1,1,0,0,A,1
+o-752fe5b9,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,2,0,2,3,1,2,1,0,B,0
+o-752fe5b9,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Hata ayıklama,3,1,2.5,3.6,1,2,1,0,B,0
+o-d844c7b9,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,1,0,0,1,0,3,0,0,A,1
+o-d844c7b9,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,2,0,1,0.4,0,0,0,0,B,0
+o-d844c7b9,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,3,1,0.7,1.1,0,0,0,0,A,1
+o-ed464cc4,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,1,0,0,0.5,0,1,0,0,A,1
+o-ed464cc4,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,2,0,0.5,0.6,0,0,0,0,B,0
+o-ed464cc4,gercek,O3,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,3,1,0.6,0.4,0,1,0,0,A,1
+o-b890e0ec,gercek,O3,Deneyimliyim,Backend geliştirici,Hata ayıklama,1,0,0,2.8,0,5,1,0,A,1
+o-b890e0ec,gercek,O3,Deneyimliyim,Backend geliştirici,Hata ayıklama,2,0,2.8,3.1,0,1,1,0,A,1
+o-b890e0ec,gercek,O3,Deneyimliyim,Backend geliştirici,Hata ayıklama,3,0,3,0.8,0,1,0,0,A,1
+o-0a31a309,gercek,O3,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,1,0,0,0.5,0,1,0,0,A,1
+o-0a31a309,gercek,O3,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,2,0,0.5,0.9,0,0,0,0,B,0
+o-0a31a309,gercek,O3,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,3,1,0.7,0.5,0,1,0,0,A,1
+o-ba248f40,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,1,0,0,0.6,0,1,0,0,A,1
+o-ba248f40,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,2,0,0.6,0.4,0,0,0,0,B,0
+o-ba248f40,gercek,O3,Deneyimliyim,Backend geliştirici,Veri güvenliği ve KVKK,3,1,0.5,0.4,0,1,0,0,A,1
+o-bd968415,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,1,0,0,0.4,0,1,0,0,A,1
+o-bd968415,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,2,0,0.4,2.8,0,0,1,0,B,0
+o-bd968415,gercek,O3,Deneyimliyim,Backend geliştirici,Test ve kalite,3,1,1.6,0.6,0,1,0,0,A,1
+o-d0377ccc,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,1,0,0,0.5,0,0,0,0,B,0
+o-d0377ccc,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,2,1,0.5,1,0,1,0,0,A,1
+o-d0377ccc,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,3,1,0.8,0.6,0,2,0,0,B,0
+o-3d3eb0a4,gercek,O4,Biraz deneyimim var,Takım lideri,Hata ayıklama,1,0,0,1.9,1,3,0,0,A,1
+o-3d3eb0a4,gercek,O4,Biraz deneyimim var,Takım lideri,Hata ayıklama,2,0,1.9,1.5,1,1,0,0,A,1
+o-3d3eb0a4,gercek,O4,Biraz deneyimim var,Takım lideri,Hata ayıklama,3,0,1.7,1.2,1,1,0,0,A,1
+o-5b65b6ea,gercek,O4,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,1,0,0,0.6,0,1,0,0,A,1
+o-5b65b6ea,gercek,O4,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,2,0,0.6,0.7,0,0,0,0,B,0
+o-5b65b6ea,gercek,O4,Biraz deneyimim var,Backend geliştirici,Hata ayıklama,3,1,0.6,3.7,1,3,1,0,A,1
+o-edb1580b,gercek,O4,Yeni başladım,Backend geliştirici,Veri güvenliği ve KVKK,1,0,0,0.8,1,1,0,0,A,1
+o-edb1580b,gercek,O4,Yeni başladım,Backend geliştirici,Veri güvenliği ve KVKK,2,0,0.8,2.6,1,1,1,0,A,1
+o-edb1580b,gercek,O4,Yeni başladım,Backend geliştirici,Veri güvenliği ve KVKK,3,0,1.7,4.4,1,3,1,0,A,1
+o-2ad9a8a0,gercek,O4,Yeni başladım,Takım lideri,Test ve kalite,1,0,0,0.9,1,3,0,0,A,1
+o-2ad9a8a0,gercek,O4,Yeni başladım,Takım lideri,Test ve kalite,2,0,0.9,0.6,1,0,0,0,B,0
+o-2ad9a8a0,gercek,O4,Yeni başladım,Takım lideri,Test ve kalite,3,1,0.8,0.6,1,1,0,0,A,1
+o-7088a170,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,1,0,0,0.9,0,1,0,0,A,1
+o-7088a170,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,2,0,0.9,1,0,0,0,0,A,1
+o-7088a170,gercek,O4,Deneyimliyim,Takım lideri,Veri güvenliği ve KVKK,3,0,1,1.8,0,0,0,0,A,1
+o-196f8e96,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,1,0,0,0.6,0,1,0,0,A,1
+o-196f8e96,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,2,0,0.6,0.5,0,0,0,0,B,0
+o-196f8e96,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Test ve kalite,3,1,0.6,0.8,0,1,0,0,A,1
+o-765a68bf,gercek,O4,Yeni başladım,Test (QA) mühendisi,Hata ayıklama,1,0,0,0.5,1,1,0,0,A,1
+o-765a68bf,gercek,O4,Yeni başladım,Test (QA) mühendisi,Hata ayıklama,2,0,0.5,0.6,1,0,0,0,B,0
+o-765a68bf,gercek,O4,Yeni başladım,Test (QA) mühendisi,Hata ayıklama,3,1,0.6,0.4,1,1,0,0,A,1
+o-7a51e846,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,1,0,0,0.9,0,1,0,0,A,1
+o-7a51e846,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,2,0,0.9,0.9,0,0,0,0,B,0
+o-7a51e846,gercek,O4,Biraz deneyimim var,Test (QA) mühendisi,Veri güvenliği ve KVKK,3,1,0.9,1,0,1,0,0,A,1
+o-510c11ec,gercek,O4,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,1,0,0,3.7,0,3,1,0,A,1
+o-510c11ec,gercek,O4,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,2,0,3.7,0.9,0,0,0,0,B,0
+o-510c11ec,gercek,O4,Deneyimliyim,Test (QA) mühendisi,Veri güvenliği ve KVKK,3,1,2.3,0.4,0,1,0,0,A,1

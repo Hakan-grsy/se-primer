@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 
@@ -185,6 +186,75 @@ app.post('/api/tutor', async (req, res) => {
     });
   }
 });
+
+// Veri toplama: oturum satırlarını ../data/oturumlar.csv dosyasına ekler.
+// Yalnızca yerelde (production dışında) açıktır.
+const CSV_YOLU = path.resolve(__dirname, '..', 'data', 'oturumlar.csv');
+const CSV_SUTUNLAR = [
+  'oturum_id', 'kaynak', 'oyuncu_kodu', 'seviye', 'rol', 'hedef', 'karar_no',
+  'onceki_yanlis_sayisi', 'onceki_ort_sure_sn', 'karar_suresi_sn', 'ipucu_acildi',
+  'tereddut_sayisi', 'tutor_mesaj_sayisi', 'zaman_asimi', 'secim', 'dogru_mu',
+];
+
+function csvHucre(v: unknown): string {
+  const s = String(v ?? '');
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+// Toplam oturum sayısı ve (verildiyse) bir oyuncu kodunun oturum sayısı.
+// oturum_id ve oyuncu_kodu tırnak gerektirmediği için basit split yeterli.
+function oturumSayilari(oyuncu?: string) {
+  if (!fs.existsSync(CSV_YOLU)) return { oturum_sayisi: 0, oyuncu_oturum_sayisi: 0 };
+  const [baslik, ...satirlar] = fs.readFileSync(CSV_YOLU, 'utf8').split(/\r?\n/).filter(Boolean);
+  const oyuncuIdx = baslik.split(',').indexOf('oyuncu_kodu');
+  const tum = new Set<string>();
+  const oyuncunun = new Set<string>();
+  for (const s of satirlar) {
+    const h = s.split(',');
+    tum.add(h[0]);
+    if (oyuncu && oyuncuIdx >= 0 && h[oyuncuIdx] === oyuncu) oyuncunun.add(h[0]);
+  }
+  return { oturum_sayisi: tum.size, oyuncu_oturum_sayisi: oyuncunun.size };
+}
+
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/api/oturum', (req, res) => {
+    res.json(oturumSayilari(String(req.query.oyuncu ?? '')));
+  });
+
+  app.post('/api/oturum', (req, res) => {
+    const satirlar = req.body?.satirlar;
+    if (!Array.isArray(satirlar) || satirlar.length !== 3) {
+      return res.status(400).json({ error: 'Bir oturum tam olarak 3 karar satırı içermeli.' });
+    }
+    if (!satirlar.every((s: any) => s && /^o-[0-9a-f]{8}$/.test(String(s.oturum_id)))) {
+      return res.status(400).json({ error: 'Geçersiz oturum kimliği.' });
+    }
+    if (!satirlar.every((s: any) => /^O\d{1,2}$/.test(String(s.oyuncu_kodu)))) {
+      return res.status(400).json({ error: 'Geçersiz oyuncu kodu.' });
+    }
+    fs.mkdirSync(path.dirname(CSV_YOLU), { recursive: true });
+    if (!fs.existsSync(CSV_YOLU)) {
+      fs.writeFileSync(CSV_YOLU, CSV_SUTUNLAR.join(',') + '\n', 'utf8');
+    } else {
+      // Eski sütun düzenindeki bir dosyaya yeni düzende satır eklenmesin
+      const baslik = fs.readFileSync(CSV_YOLU, 'utf8').split(/\r?\n/)[0];
+      if (baslik !== CSV_SUTUNLAR.join(',')) {
+        return res.status(500).json({ error: 'oturumlar.csv başlığı beklenen sütunlarla uyuşmuyor.' });
+      }
+    }
+    const metin = satirlar
+      .map((s: any) => CSV_SUTUNLAR.map((c) => csvHucre(s[c])).join(','))
+      .join('\n');
+    fs.appendFileSync(CSV_YOLU, metin + '\n', 'utf8');
+    console.log(`Oturum kaydedildi: ${satirlar[0].oturum_id} (${satirlar[0].oyuncu_kodu})`);
+    res.json(oturumSayilari(String(satirlar[0].oyuncu_kodu)));
+  });
+}
+
+// Model dosyaları (model.onnx, config.json). Uygulama varsayılan olarak buradan okur;
+// VITE_MODEL_BASE_URL verilirse (ör. Hugging Face commit'e sabit URL) oradan okur.
+app.use('/model', express.static(path.resolve(__dirname, '..', 'model'), { index: false }));
 
 // Vite middleware in dev / static in prod
 if (process.env.NODE_ENV === 'production') {

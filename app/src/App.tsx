@@ -1,5 +1,15 @@
-import React, { useState } from 'react';
-import { GameState, Goal, Level, OptionLetter, Role } from './types';
+import React, { useEffect, useRef, useState } from 'react';
+import { DecisionKey, DecisionMeta, GameState, Goal, Level, OptionLetter, Role } from './types';
+import {
+  OYUNCU_KODU,
+  OturumSatiri,
+  OturumSayilari,
+  VERI_MODU,
+  oturumSayisiniGetir,
+  oturumuKaydet,
+  yeniOturumId,
+} from './veriToplama';
+import { modeliYukle } from './model/risk';
 import { DECISIONS } from './data/scenarioData';
 import { Header } from './components/Header';
 import { GirisScreen } from './components/GirisScreen';
@@ -21,8 +31,52 @@ export default function App() {
   }>({});
   const [isCurrentTimeout, setIsCurrentTimeout] = useState<boolean>(false);
 
+  // Veri toplama modu (?veri=1)
+  const oturumIdRef = useRef<string>(yeniOturumId());
+  const satirlarRef = useRef<OturumSatiri[]>([]);
+  const [kayitliOturum, setKayitliOturum] = useState<OturumSayilari | null>(null);
+  const [kayitDurumu, setKayitDurumu] = useState<'bekliyor' | 'kaydedildi' | 'hata'>('bekliyor');
+
+  useEffect(() => {
+    if (VERI_MODU) oturumSayisiniGetir().then(setKayitliOturum);
+    modeliYukle(); // risk modelini oyun başlarken önceden yükle
+  }, []);
+
+  const kararKaydet = (key: DecisionKey, kararNo: number, letter: OptionLetter, isTimeout: boolean, meta?: DecisionMeta) => {
+    if (!VERI_MODU || !meta || !selectedLevel || !selectedRole || !selectedGoal) return;
+    const onceki = satirlarRef.current;
+    if (onceki.some((s) => s.karar_no === kararNo)) return; // aynı karar iki kez kaydedilmesin
+    const ortSure = onceki.length
+      ? Math.round((onceki.reduce((t, s) => t + s.karar_suresi_sn, 0) / onceki.length) * 10) / 10
+      : 0;
+    satirlarRef.current = [
+      ...onceki,
+      {
+        oturum_id: oturumIdRef.current,
+        kaynak: 'gercek',
+        oyuncu_kodu: OYUNCU_KODU,
+        seviye: selectedLevel,
+        rol: selectedRole,
+        hedef: selectedGoal,
+        karar_no: kararNo,
+        onceki_yanlis_sayisi: onceki.filter((s) => s.dogru_mu === 0).length,
+        onceki_ort_sure_sn: ortSure,
+        karar_suresi_sn: meta.kararSuresiSn,
+        ipucu_acildi: meta.ipucuAcildi ? 1 : 0,
+        tereddut_sayisi: meta.tereddutSayisi,
+        tutor_mesaj_sayisi: meta.tutorMesajSayisi,
+        zaman_asimi: isTimeout ? 1 : 0,
+        secim: letter,
+        dogru_mu: DECISIONS[key].options[letter].isCorrect ? 1 : 0,
+      },
+    ];
+  };
+
   // Reset all state to restart the game
   const handleReset = () => {
+    oturumIdRef.current = yeniOturumId();
+    satirlarRef.current = [];
+    setKayitDurumu('bekliyor');
     setGameState('giris');
     setSelectedLevel(null);
     setSelectedRole(null);
@@ -43,19 +97,22 @@ export default function App() {
   const currentScore = calculateScore();
 
   // Handlers for decision options
-  const handleChooseKarar1 = (letter: OptionLetter, isTimeout = false) => {
+  const handleChooseKarar1 = (letter: OptionLetter, isTimeout = false, meta?: DecisionMeta) => {
+    kararKaydet('karar1', 1, letter, Boolean(isTimeout), meta);
     setIsCurrentTimeout(Boolean(isTimeout));
     setChoices((prev) => ({ ...prev, karar1: letter }));
     setGameState('sonuc1');
   };
 
-  const handleChooseKarar2 = (letter: OptionLetter, isTimeout = false) => {
+  const handleChooseKarar2 = (letter: OptionLetter, isTimeout = false, meta?: DecisionMeta) => {
+    kararKaydet('karar2', 2, letter, Boolean(isTimeout), meta);
     setIsCurrentTimeout(Boolean(isTimeout));
     setChoices((prev) => ({ ...prev, karar2: letter }));
     setGameState('sonuc2');
   };
 
-  const handleChooseKarar3 = (letter: OptionLetter, isTimeout = false) => {
+  const handleChooseKarar3 = (letter: OptionLetter, isTimeout = false, meta?: DecisionMeta) => {
+    kararKaydet('karar3', 3, letter, Boolean(isTimeout), meta);
     setIsCurrentTimeout(Boolean(isTimeout));
     setChoices((prev) => ({ ...prev, karar3: letter }));
     setGameState('sonuc3');
@@ -69,6 +126,15 @@ export default function App() {
 
     const isGoodEnding = choices.karar3 === 'A' && finalScore >= 2;
     setGameState(isGoodEnding ? 'iyison' : 'kotuson');
+
+    if (VERI_MODU && satirlarRef.current.length === 3) {
+      const satirlar = satirlarRef.current;
+      satirlarRef.current = [];
+      oturumuKaydet(satirlar).then((n) => {
+        setKayitDurumu(n === null ? 'hata' : 'kaydedildi');
+        if (n !== null) setKayitliOturum(n);
+      });
+    }
   };
 
   return (
@@ -189,6 +255,18 @@ export default function App() {
             />
           )}
       </main>
+
+      {VERI_MODU && (
+        <div
+          data-testid="veri-modu"
+          className="w-full max-w-[680px] mx-auto px-4 pb-3 text-center text-xs font-mono text-[#F5A23A]"
+        >
+          Veri toplama modu · oyuncu {OYUNCU_KODU}: {kayitliOturum?.oyuncu ?? '?'} oturum · toplam:{' '}
+          {kayitliOturum?.toplam ?? '?'}
+          {kayitDurumu === 'kaydedildi' && ' · bu oturum kaydedildi ✓'}
+          {kayitDurumu === 'hata' && ' · KAYIT BAŞARISIZ (sunucu çalışıyor mu?)'}
+        </div>
+      )}
 
       {/* Subtle Footer */}
       <footer className="w-full border-t border-[#2A3B63]/60 py-3 text-center text-[11px] font-mono text-[#94A3B8]/60">

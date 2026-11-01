@@ -40,6 +40,14 @@ export interface DecisionConfig {
   };
 }
 
+// Bir karar ekranında ölçülen davranış (veri toplama modu için)
+export interface DecisionMeta {
+  kararSuresiSn: number;
+  ipucuAcildi: boolean;
+  tereddutSayisi: number; // fare A ve B seçenekleri arasında kaç kez gidip geldi
+  tutorMesajSayisi: number;
+}
+
 export interface ChatMessage {
   id: string;
   role: 'user' | 'model';
