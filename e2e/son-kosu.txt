@@ -4,7 +4,7 @@
 
 
 
-DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b0b4-a12472c3dfd2
+DevTools listening on ws://127.0.0.1:51365/devtools/browser/ea6a4554-7c13-4696-a809-96f1782f2b22
 
 ====================================================================================================
 
@@ -29,17 +29,17 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
 
 
   Tüm yollar (8 yol, 2 son)
-    √ AAA → İyi son (2117ms)
-    √ ABA → İyi son (1306ms)
-    √ BAA → İyi son (1247ms)
-    √ BBA → Kötü son (1215ms)
-    √ AAB → Kötü son (1192ms)
-    √ ABB → Kötü son (1201ms)
-    √ BAB → Kötü son (1134ms)
-    √ BBB → Kötü son (1099ms)
+    √ AAA → İyi son (2247ms)
+    √ ABA → İyi son (1141ms)
+    √ BAA → İyi son (1114ms)
+    √ BBA → Kötü son (1125ms)
+    √ AAB → Kötü son (1098ms)
+    √ ABB → Kötü son (1114ms)
+    √ BAB → Kötü son (1105ms)
+    √ BBB → Kötü son (1106ms)
 
 
-  8 passing (11s)
+  8 passing (10s)
 
 
   (Results)
@@ -63,17 +63,17 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
 
 
   Kabul örnekleri
-    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1339ms)
-    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (616ms)
-    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (572ms)
-    √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (572ms)
-    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (991ms)
-    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (978ms)
-    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1093ms)
-    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1192ms)
+    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1342ms)
+    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (608ms)
+    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (566ms)
+    √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (583ms)
+    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (990ms)
+    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (988ms)
+    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1131ms)
+    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1086ms)
 
 
-  8 passing (8s)
+  8 passing (7s)
 
 
   (Results)
@@ -97,17 +97,17 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
 
 
   v2 risk modeli: Selin kartı (K6, K7)
-    √ yeni-basladim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (5555ms)
-    √ biraz-deneyimim-var: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (4717ms)
-    √ deneyimliyim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (4198ms)
+    √ yeni-basladim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (5901ms)
+    √ biraz-deneyimim-var: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (3654ms)
+    √ deneyimliyim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (3543ms)
 
   v2 risk modeli: hata durumları
-    √ model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır (1150ms)
-    √ geri dönüş anahtarı: model kapalıyken model indirilmez, oyun v1 gibi biter (1160ms)
-    √ veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK) (1114ms)
+    √ model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır (1053ms)
+    √ geri dönüş anahtarı: model kapalıyken model indirilmez, oyun v1 gibi biter (1017ms)
+    √ veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK) (1018ms)
 
 
-  6 passing (18s)
+  6 passing (16s)
 
 
   (Results)
@@ -120,7 +120,7 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     18 seconds                                                                       │
+  │ Duration:     16 seconds                                                                       │
   │ Spec Ran:     model-regresyon.cy.js                                                            │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
@@ -131,11 +131,11 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
 
 
   Parite: Python (oracle) ile tarayıcı aynı olasılığı veriyor
-    √ tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256) (1074ms)
-    √ 5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı (18502ms)
+    √ tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256) (929ms)
+    √ 5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı (16155ms)
 
 
-  2 passing (20s)
+  2 passing (17s)
 
 
   (Results)
@@ -148,7 +148,7 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     19 seconds                                                                       │
+  │ Duration:     17 seconds                                                                       │
   │ Spec Ran:     parite.cy.js                                                                     │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
@@ -164,9 +164,9 @@ DevTools listening on ws://127.0.0.1:50600/devtools/browser/0db97993-4f79-46ed-b
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
   │ √  kabul-ornekleri.cy.js                    00:07        8        8        -        -        - │
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ √  model-regresyon.cy.js                    00:18        6        6        -        -        - │
+  │ √  model-regresyon.cy.js                    00:16        6        6        -        -        - │
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ √  parite.cy.js                             00:19        2        2        -        -        - │
+  │ √  parite.cy.js                             00:17        2        2        -        -        - │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
-    √  All specs passed!                        00:56       24       24        -        -        -  
+    √  All specs passed!                        00:51       24       24        -        -        -  
 

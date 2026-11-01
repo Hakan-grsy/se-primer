@@ -271,7 +271,13 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
         )}
       </div>
 
-      {/* AI Tutor on every decision screen */}
+      {/* AI Tutor on every decision screen. Statik yayında (GitHub Pages) sunucu
+          olmadığı için tutor yerine kısa bir not gösterilir. */}
+      {import.meta.env.VITE_STATIK === '1' ? (
+        <p data-testid="tutor-statik" className="text-center text-xs font-mono text-[#94A3B8]/80 px-2">
+          AI tutor bu yayında kapalı (sunucusuz sürüm). Tutor'lu sürüm için README'deki kurulum adımlarına bakın.
+        </p>
+      ) : (
       <AiTutor
         decisionTitle={decision.title}
         optionATitle={decision.options.A.title}
@@ -281,6 +287,7 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
           tutorCountRef.current += 1;
         }}
       />
+      )}
     </div>
   );
 };
