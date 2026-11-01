@@ -7,7 +7,8 @@ YZM301 · Ödev 7. Geçen haftaki *SE Primer* oyununa (yanlış hastaya giden ta
 - **Hugging Face modeli (commit'e sabit):** https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/tree/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa
 - **Canlı uygulama (GitHub Pages):** https://hakan-grsy.github.io/se-primer/
   Model tarayıcıda çalışır ve Hugging Face'teki sabit commit'ten indirilir. Sunucusuz yayın olduğu için AI tutor ve veri toplama burada kapalıdır; ikisi de yerel kurulumda çalışır. (v1, AI Studio: https://ai.studio/apps/af5726e6-29ac-45ee-b4fb-c9c934d50b2c)
-- **Demo video (60–90 sn):** _eklenecek_
+- **Demo video (66 sn):** [e2e/cypress/videos/demo-v2-mobil.mp4](e2e/cypress/videos/demo-v2-mobil.mp4) _(YouTube linki eklenecek)_
+  Canlı sitede iki oyuncu aynı sahnelerden geçer. Ekrandaki risk değerleri modelden o an okunur. Video, bu sürümün sınırını da gösterir: Karar 2'de iki oyuncuya farklı risk hesaplanır (0.650 / 0.609), ama ikisi de eşiğin üstünde kaldığı için kart kararı aynıdır. Yeniden çekmek için: `npm --prefix e2e run test:demo2` (Cypress), sonra telefon ekranına kırpma (ffmpeg).
 
 ## Kurulum (3 komut)
 ```bash

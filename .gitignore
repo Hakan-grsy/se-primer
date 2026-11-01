@@ -6,3 +6,4 @@ e2e/cypress/screenshots/
 dist/
 *.log
 __pycache__/
+e2e/cypress/videos/demo-v2.cy.js*.mp4

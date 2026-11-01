@@ -7,6 +7,7 @@
     "test:parite": "cypress run --config video=false --spec cypress/e2e/parite.cy.js",
     "test:regresyon": "cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js,cypress/e2e/model-regresyon.cy.js",
     "test:demo": "cypress run --spec cypress/e2e/demo.cy.js",
+    "test:demo2": "cypress run --spec cypress/e2e/demo-v2.cy.js --config baseUrl=https://hakan-grsy.github.io/se-primer/",
     "cypress:open": "cypress open"
   },
   "devDependencies": {
