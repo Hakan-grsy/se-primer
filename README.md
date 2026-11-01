@@ -66,6 +66,9 @@ npm --prefix e2e run test:e2e    # 24 test: 8 yol, 8 kabul örneği, 6 model reg
 - Veriyi uydurmak yerine gerçek oturum toplamaya karar verdim. Oyunları kendim ve 3 arkadaşım oynadık.
 - Deneme 1 ve 2 eşiği geçemeyince eşiği düşürmek yerine önce daha fazla veri toplamayı, sonra girdileri sadeleştirmeyi seçtim.
 
-**Elle düzelttiklerim** _(bu bölümü teslimden önce kendim dolduracağım)_:
-- _..._
-- _..._
+**Elle yaptıklarım ve düzelttiklerim:**
+- **Veri toplama:** 15 gerçek oturumu kendim oynadım, sonra 3 arkadaşıma oynattım. Bunu bir yapay zekâya uydurtmadım; `kaynak` sütunundaki her satır gerçek bir oyuna ait.
+- **Veri etiketi düzeltmesi:** O2 kodlu oturumların ikisini yanlışlıkla kendim oynadığımı fark edip bildirdim. Kontrol edince o iki oturumun zaten O1 (benim kodum) altında kaydedildiği görüldü, yani etiketler doğru çıktı ve veri sözlüğüne bu şekilde yazıldı.
+- **Hugging Face hesabı ve erişim anahtarı:** Girişi ve token oluşturmayı kendim yaptım. Anahtarı araca vermedim, yalnızca terminale girdim.
+- **Yön kararları:** Model eşiği geçemediğinde eşiği düşürmek yerine daha fazla veri toplamayı ve sonra sade modeli seçtim. Demo videosunda sınırı gizlemek yerine açıkça göstermeyi seçtim.
+- **Not:** Claude Code'un yazdığı kodu ve metinleri (README, RELEASE.md, SINAV_TASARIMI.md) satır satır elle düzeltmedim; okuyup onayladım. Düzeltme ve hata ayıklama, araca geri bildirim vererek yapıldı.
