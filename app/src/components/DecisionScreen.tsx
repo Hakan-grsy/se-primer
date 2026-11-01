@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { DecisionConfig, Goal, Level, OptionLetter, Role } from '../types';
+import React, { useState, useEffect, useRef } from 'react';
+import { DecisionConfig, DecisionMeta, Goal, Level, OptionLetter, Role } from '../types';
 import { INCIDENT_INFO, getRolePrefix } from '../data/scenarioData';
 import { AiTutor } from './AiTutor';
 import { Clock, HelpCircle, Lightbulb, Shield, Timer, UserCheck } from 'lucide-react';
@@ -9,7 +9,7 @@ interface DecisionScreenProps {
   role: Role;
   level: Level;
   goal: Goal;
-  onChooseOption: (letter: OptionLetter, isTimeout?: boolean) => void;
+  onChooseOption: (letter: OptionLetter, isTimeout?: boolean, meta?: DecisionMeta) => void;
 }
 
 export const DecisionScreen: React.FC<DecisionScreenProps> = ({
@@ -21,6 +21,26 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
 }) => {
   const [showHint, setShowHint] = useState<boolean>(level === 'Yeni başladım');
   const [secondsLeft, setSecondsLeft] = useState<number>(60);
+
+  // Davranış ölçümü (veri toplama modu). Ref kullanılıyor; süre dolunca
+  // çağrılan zamanlayıcı da en güncel değerleri okuyabilsin.
+  const startRef = useRef<number>(performance.now());
+  const hintOpenedRef = useRef<boolean>(level === 'Yeni başladım');
+  const hoverRef = useRef<{ last: OptionLetter | null; switches: number }>({ last: null, switches: 0 });
+  const tutorCountRef = useRef<number>(0);
+
+  const buildMeta = (): DecisionMeta => ({
+    kararSuresiSn: Math.round((performance.now() - startRef.current) / 100) / 10,
+    ipucuAcildi: hintOpenedRef.current,
+    tereddutSayisi: hoverRef.current.switches,
+    tutorMesajSayisi: tutorCountRef.current,
+  });
+
+  const handleHover = (letter: OptionLetter) => {
+    const h = hoverRef.current;
+    if (h.last && h.last !== letter) h.switches += 1;
+    h.last = letter;
+  };
 
   const rolePrefix = getRolePrefix(role);
   const isDecision1 = decision.key === 'karar1';
@@ -35,7 +55,7 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
       setSecondsLeft((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          onChooseOption('B', true);
+          onChooseOption('B', true, buildMeta());
           return 0;
         }
         return prev - 1;
@@ -126,7 +146,8 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
           <button
             type="button"
             data-testid="option-a"
-            onClick={() => onChooseOption('A')}
+            onClick={() => onChooseOption('A', false, buildMeta())}
+            onMouseEnter={() => handleHover('A')}
             className="w-full text-left p-4 rounded-xl border border-[#2A3B63] bg-[#16264A] hover:bg-[#1C305C] hover:border-[#F5A23A] transition-all flex items-start gap-3.5 min-h-[56px] relative group active:scale-[0.98] cursor-pointer"
           >
             <div className="w-7 h-7 rounded-lg bg-[#2A3B63] group-hover:bg-[#F5A23A] group-hover:text-[#0F1B33] text-[#F5A23A] font-heading font-bold text-sm flex items-center justify-center shrink-0 transition-colors">
@@ -141,7 +162,8 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
           <button
             type="button"
             data-testid="option-b"
-            onClick={() => onChooseOption('B')}
+            onClick={() => onChooseOption('B', false, buildMeta())}
+            onMouseEnter={() => handleHover('B')}
             className="w-full text-left p-4 rounded-xl border border-[#2A3B63] bg-[#16264A] hover:bg-[#1C305C] hover:border-[#F5A23A] transition-all flex items-start gap-3.5 min-h-[56px] relative group active:scale-[0.98] cursor-pointer"
           >
             <div className="w-7 h-7 rounded-lg bg-[#2A3B63] group-hover:bg-[#F5A23A] group-hover:text-[#0F1B33] text-[#F5A23A] font-heading font-bold text-sm flex items-center justify-center shrink-0 transition-colors">
@@ -177,7 +199,10 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
               <button
                 type="button"
                 data-testid="hint-button"
-                onClick={() => setShowHint(true)}
+                onClick={() => {
+                  hintOpenedRef.current = true;
+                  setShowHint(true);
+                }}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#2A3B63] bg-[#0F1B33] hover:border-[#F5A23A]/60 text-xs font-mono text-[#F5A23A] transition-colors cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
@@ -209,6 +234,9 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
         optionATitle={decision.options.A.title}
         optionBTitle={decision.options.B.title}
         goal={goal}
+        onUserMessage={() => {
+          tutorCountRef.current += 1;
+        }}
       />
     </div>
   );

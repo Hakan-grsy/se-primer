@@ -149,3 +149,47 @@ stateDiagram-v2
 1. **Giriş ekranı:** başlık, kısa tanıtım, 3 soru (seçim kartları), "Başla" düğmesi.
 2. **Sahne ekranı:** saat göstergesi, hikâye metni, 2 seçenek düğmesi, ipucu kartı / sayaç, tutor sohbet alanı. Seçim sonrası aynı ekranda "Ne oldu? / Neden oldu?" paneli açılır.
 3. **Son ekranı:** İyi / Kötü son metni, her kararın özeti (✅/❌), hedefe göre "Öğrendiklerin", "Tekrar oyna" düğmesi.
+
+---
+
+## 9. Model (v2) — Yanlış karar riski
+
+> Bu bölüm **eğitimden önce** yazıldı ve eşikler eğitim sonucuna göre değiştirilmez. Eşiği geçemeyen model yayınlanmaz.
+
+### 9.1 Model gereksinimi
+- **Soru:** *"Oyuncu bu karar ekranına geldiğinde, bu kararı yanlış verme olasılığı nedir?"*
+- **Çıktı:** `p_yanlis` ∈ [0, 1].
+- **Oyuna etkisi:** Karar ekranı açılırken model bir kez çalışır. `p_yanlis ≥ 0.50` (müdahale eşiği, `config.json` içinde) ise ekranın üstünde **"Kıdemli meslektaşın Selin arıyor"** kartı çıkar ve o karara özel kısa bir uyarı verir. Uyarı, tutor kuralına uyar: doğru seçeneği söylemez, düşündürür. Eşiğin altında kart çıkmaz ve hikâye v1'deki gibi devam eder.
+- **Neden ekran açılırken?** Karar süresi ve tereddüt, oyuncu seçim yapana kadar tamamlanmaz. Bu yüzden model yalnızca **ekran açıldığı anda bilinen** girdileri kullanır. Eğitimde de aynı girdiler kullanılır, böylece eğitim ile kullanım arasında fark (train/serve skew) oluşmaz.
+- **Model:** Lojistik regresyon (`scikit-learn`), `random_state=42`. Veri az (72 satır) olduğu için az girdili, yorumlanabilir bir model seçildi.
+
+### 9.2 Girdiler (sırası `config.json` ile sabitlenir)
+| # | Girdi | Nasıl hesaplanır |
+|---|---|---|
+| 1 | `seviye_kod` | Yeni başladım = 0, Biraz deneyimim var = 1, Deneyimliyim = 2 |
+| 2 | `karar_2` | Karar 2 ise 1, değilse 0 |
+| 3 | `karar_3` | Karar 3 ise 1, değilse 0 |
+| 4 | `onceki_yanlis_sayisi` | Bu oturumda önceki kararlardaki yanlış sayısı |
+| 5 | `onceki_ort_sure_sn` | Önceki kararların ortalama süresi (Karar 1'de 0) |
+
+`rol` ve `hedef` girdi değildir: v1 spesifikasyonuna göre bunlar yalnızca anlatıyı ve tutor'u değiştirir, kararları değiştirmez (bkz. §4). Ölçülen ama girdi olmayan sütunlar (`karar_suresi_sn`, `tereddut_sayisi` vb.) veri setinde kalır ve sonraki sürümler için saklanır.
+
+### 9.3 Değerlendirme metriği ve kabul eşiği (altın standart)
+- **Metrik:** ROC AUC. Pozitif sınıf `dogru_mu = 0` (yanlış karar).
+- **Ölçüm yöntemi:** `oturum_id`'ye göre gruplu 5 katlı çapraz doğrulama (`GroupKFold`). Aynı oturumun 3 kararı hep aynı katta kalır, böylece model bir oturumu hem eğitimde hem testte görmez.
+- **Kabul eşiği: AUC ≥ 0.60.** 0.50, yazı tura atmaktır. İki kişiden gelen 72 satırlık veride 0.60, "modelin rastgeleden anlamlı biçimde iyi olduğu" için gerçekçi bir alt sınırdır.
+- **AUC yalnızca `kaynak = gercek` satırlarla ölçülür.** Sentetik veri eklenirse yalnızca eğitimde kullanılır. Sentetik veriyle ölçüm, modeli kendi üretim kurallarımızı öğrendiği için yapay olarak iyi gösterir.
+- **Bilgi amaçlı (eşik değil):** Brier skoru, tüm oyunculara aynı oranı (veri setindeki yanlış oranı) veren taban modelle birlikte raporlanır.
+- `train.py` AUC < 0.60 bulursa **hata kodu ile durur** ve `model.onnx` üretmez.
+
+### 9.4 Kabul örnekleri (v2)
+| # | Verilen (Given) | Olay (When) | Beklenen (Then) |
+|---|---|---|---|
+| **K6** | Model bir karar için `p_yanlis = 0.62` döndürüyor, müdahale eşiği 0.50 | Karar ekranı açılır | "Kıdemli meslektaşın Selin arıyor" kartı **görünür**. Uyarı metni "A", "B" ya da "doğru cevap" ifadelerini **içermez**. |
+| **K7** | Model bir karar için `p_yanlis = 0.31` döndürüyor | Karar ekranı açılır | Kart **görünmez**, ekran v1'deki gibidir. |
+| **K8** | `tests/parite.json` içindeki 5 referans girdi | Aynı `model.onnx` hem Python'da (oracle) hem tarayıcıda (`onnxruntime-web`) çalıştırılır | Her girdi için iki olasılık arasındaki fark **< 1e-4**. |
+
+### 9.5 Bilinen sınırlar
+- Veri **yalnızca iki oyuncudan** geliyor (O1: 17 oturum, O2: 7 oturum; toplam 24 oturum, 72 satır). Model bu iki kişinin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
+- Bazı durumlar veride az: süre 2 oturumda doldu (6 karar), tutor'a 6 kararda soru soruldu, "İpucu iste" düğmesi 4 kararda kullanıldı.
+- Model bir eğitim oyunu içindir. Gerçek bir kişiyi değerlendirmek ya da notlandırmak için kullanılmamalıdır.
