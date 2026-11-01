@@ -3,10 +3,18 @@
 import * as ort from 'onnxruntime-web';
 import { Level } from '../types';
 
-// Model dosyalarının adresi. Varsayılan: uygulama sunucusundaki /model.
-// Yayında Hugging Face'teki commit'e sabitlenmiş adres verilir:
-//   VITE_MODEL_BASE_URL=https://huggingface.co/<kullanici>/<repo>/resolve/<commit>
-const MODEL_BASE_URL = (import.meta.env.VITE_MODEL_BASE_URL as string | undefined) || '/model';
+// Model dosyalarının adresi, öncelik sırasıyla:
+//   1. VITE_MODEL_BASE_URL ortam değişkeni (ör. yerel deneme için /model)
+//   2. ./yayin.json → Hugging Face'te commit'e sabitlenmiş adres (scripts/hf_yayinla.py yazar)
+//   3. /model (uygulama sunucusundaki yerel kopya)
+// main dalı değil commit kullanılır: HF'te model değişse bile uygulama aynı sürümü indirir.
+const yayinDosyasi = import.meta.glob<{ model_base_url: string }>('./yayin.json', {
+  eager: true,
+  import: 'default',
+});
+const YAYIN_URL = Object.values(yayinDosyasi)[0]?.model_base_url;
+export const MODEL_BASE_URL =
+  (import.meta.env.VITE_MODEL_BASE_URL as string | undefined) || YAYIN_URL || '/model';
 
 // WASM dosyaları, kurulu paketle aynı sürümden CDN'den yüklenir.
 ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.23.2/dist/';
@@ -102,4 +110,5 @@ export async function riskHesapla(seviye: Level, kararNo: number): Promise<RiskS
 // Test ve konsol için: window.primerRisk(girdi) -> p_yanlis
 if (typeof window !== 'undefined') {
   (window as any).primerRisk = olasilikHesapla;
+  (window as any).primerModelUrl = `${MODEL_BASE_URL}/model.onnx`;
 }

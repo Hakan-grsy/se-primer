@@ -22,9 +22,16 @@ describe('Parite: Python (oracle) ile tarayıcı aynı olasılığı veriyor', (
   });
 
   it('tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256)', () => {
-    cy.request({ url: '/model/model.onnx', encoding: 'base64' }).then((res) => {
-      cy.task('sha256Base64', res.body).should('eq', parite.model_sha256);
-    });
+    // Uygulamanın gerçekten kullandığı adres (yayındaysa HF'te commit'e sabit URL)
+    cy.visit('/');
+    cy.window()
+      .its('primerModelUrl')
+      .then((url) => {
+        cy.log(`model adresi: ${url}`);
+        cy.request({ url, encoding: 'base64' }).then((res) => {
+          cy.task('sha256Base64', res.body).should('eq', parite.model_sha256);
+        });
+      });
   });
 
   it('5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı', () => {

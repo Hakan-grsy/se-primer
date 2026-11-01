@@ -1,16 +1,10 @@
-﻿
+
 > test:e2e
 > cypress run --config video=false --spec cypress/e2e/tum-yollar.cy.js,cypress/e2e/kabul-ornekleri.cy.js,cypress/e2e/model-regresyon.cy.js,cypress/e2e/parite.cy.js
 
 
-node.exe : 
-At line:1 char:1
-+ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
-DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8fad-0cbc8922c0cd
+
+DevTools listening on ws://127.0.0.1:53590/devtools/browser/541100e1-2f93-45d0-83e2-b9cd82ddac0d
 
 ====================================================================================================
 
@@ -35,14 +29,14 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
 
 
   Tüm yollar (8 yol, 2 son)
-    √ AAA → İyi son (2157ms)
-    √ ABA → İyi son (1327ms)
-    √ BAA → İyi son (1216ms)
-    √ BBA → Kötü son (1232ms)
-    √ AAB → Kötü son (1234ms)
-    √ ABB → Kötü son (1208ms)
-    √ BAB → Kötü son (1203ms)
-    √ BBB → Kötü son (1209ms)
+    √ AAA → İyi son (2516ms)
+    √ ABA → İyi son (1242ms)
+    √ BAA → İyi son (1214ms)
+    √ BBA → Kötü son (1196ms)
+    √ AAB → Kötü son (1173ms)
+    √ ABB → Kötü son (1162ms)
+    √ BAB → Kötü son (1160ms)
+    √ BBB → Kötü son (1184ms)
 
 
   8 passing (11s)
@@ -69,14 +63,14 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
 
 
   Kabul örnekleri
-    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1472ms)
-    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (678ms)
-    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (624ms)
+    √ K1 · "Yeni başladım": ipucu kartı kendiliğinden görünür, sayaç yok (1493ms)
+    √ Ek · "Biraz deneyimim var": ipucu ancak "İpucu iste" ile açılır (666ms)
+    √ K2 · "Deneyimliyim": 60 sn dolunca "Süre doldu" ve B sonucu (656ms)
     √ K2 (ek) · Oyuncu B'ye kendisi tıklarsa "Süre doldu" görünmez (631ms)
-    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (1068ms)
-    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (1056ms)
-    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1281ms)
-    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1181ms)
+    √ K3 · Her seçimden sonra "Ne oldu?" / "Neden oldu?" ve Devam (1064ms)
+    √ K4 · Karar 1 ve 2 = A olsa bile Karar 3 = B ise Kötü son (1030ms)
+    √ K5 · Tutor sorusu sunucuya gider, cevap balon olarak görünür (1215ms)
+    √ Ek · Gemini hata verirse sahte cevap değil, hata uyarısı görünür (1202ms)
 
 
   8 passing (8s)
@@ -103,16 +97,16 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
 
 
   v2 risk modeli: Selin kartı (K6, K7)
-    √ yeni-basladim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (6354ms)
-    √ biraz-deneyimim-var: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (7222ms)
-    √ deneyimliyim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (3444ms)
+    √ yeni-basladim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (5696ms)
+    √ biraz-deneyimim-var: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (3312ms)
+    √ deneyimliyim: kart yalnızca Karar 2'de çıkar ve cevabı söylemez (3586ms)
 
   v2 risk modeli: hata durumları
-    √ model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır (1122ms)
-    √ veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK) (1075ms)
+    √ model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır (1247ms)
+    √ veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK) (1138ms)
 
 
-  5 passing (19s)
+  5 passing (15s)
 
 
   (Results)
@@ -125,7 +119,7 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     19 seconds                                                                       │
+  │ Duration:     15 seconds                                                                       │
   │ Spec Ran:     model-regresyon.cy.js                                                            │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
@@ -136,11 +130,11 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
 
 
   Parite: Python (oracle) ile tarayıcı aynı olasılığı veriyor
-    √ tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256) (62ms)
-    √ 5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı (13916ms)
+    √ tarayıcı, Python ile aynı model.onnx dosyasını indiriyor (SHA-256) (1094ms)
+    √ 5 referans durumun hepsinde fark < tolerans ve Selin kararı aynı (16719ms)
 
 
-  2 passing (14s)
+  2 passing (18s)
 
 
   (Results)
@@ -153,7 +147,7 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
   │ Skipped:      0                                                                                │
   │ Screenshots:  0                                                                                │
   │ Video:        false                                                                            │
-  │ Duration:     14 seconds                                                                       │
+  │ Duration:     17 seconds                                                                       │
   │ Spec Ran:     parite.cy.js                                                                     │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
 
@@ -169,9 +163,9 @@ DevTools listening on ws://127.0.0.1:63404/devtools/browser/4247bb80-d666-4319-8
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
   │ √  kabul-ornekleri.cy.js                    00:08        8        8        -        -        - │
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ √  model-regresyon.cy.js                    00:19        5        5        -        -        - │
+  │ √  model-regresyon.cy.js                    00:15        5        5        -        -        - │
   ├────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ √  parite.cy.js                             00:14        2        2        -        -        - │
+  │ √  parite.cy.js                             00:17        2        2        -        -        - │
   └────────────────────────────────────────────────────────────────────────────────────────────────┘
     √  All specs passed!                        00:52       23       23        -        -        -  
 

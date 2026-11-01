@@ -41,7 +41,8 @@ describe('v2 risk modeli: Selin kartı (K6, K7)', () => {
 
 describe('v2 risk modeli: hata durumları', () => {
   it('model yüklenemezse oyun çökmez, v1 gibi sonuna kadar oynanır', () => {
-    cy.intercept('GET', '/model/config.json', { statusCode: 404, body: 'yok' }).as('config');
+    // Model yerelden de HF'ten de gelebilir: hangi adresteyse config.json'u düşür
+    cy.intercept('GET', /\/config\.json$/, { statusCode: 404, body: 'yok' }).as('config');
     cy.startGame('yeni-basladim');
     cy.wait('@config');
     ['A', 'A', 'A'].forEach((secim, i) => {

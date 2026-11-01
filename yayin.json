@@ -1,0 +1,22 @@
+{
+  "surumler": [
+    {
+      "etiket": "v2.0",
+      "repo": "Hakangrsy/se-primer-yanlis-karar-riski",
+      "commit": "9b7ba463fd0fd4de4b98cbc52862cafebe189bfa",
+      "model_base_url": "https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/resolve/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa",
+      "model_onnx_url": "https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/resolve/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa/model.onnx",
+      "sayfa": "https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/tree/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa",
+      "model_sha256": "4946970249c2983da0e6a46c26db4a5dbfdb11cc69b42cb132452f557a139fce",
+      "deneme": 3,
+      "metrics": {
+        "roc_auc_cv": 0.6218,
+        "brier_cv": 0.2021,
+        "brier_taban": 0.227,
+        "dogruluk_cv_esik_0_5": 0.7424,
+        "mudahale_orani_cv": 0.3333
+      },
+      "tarih": "2026-11-01T10:59:01Z"
+    }
+  ]
+}
