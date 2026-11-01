@@ -252,6 +252,10 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+// Model dosyaları (model.onnx, config.json). Uygulama varsayılan olarak buradan okur;
+// VITE_MODEL_BASE_URL verilirse (ör. Hugging Face commit'e sabit URL) oradan okur.
+app.use('/model', express.static(path.resolve(__dirname, '..', 'model'), { index: false }));
+
 // Vite middleware in dev / static in prod
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, 'dist')));

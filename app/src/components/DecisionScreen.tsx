@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DecisionConfig, DecisionMeta, Goal, Level, OptionLetter, Role } from '../types';
-import { INCIDENT_INFO, getRolePrefix } from '../data/scenarioData';
+import { INCIDENT_INFO, SELIN_UYARILARI, getRolePrefix } from '../data/scenarioData';
+import { RiskSonucu, riskHesapla } from '../model/risk';
 import { AiTutor } from './AiTutor';
-import { Clock, HelpCircle, Lightbulb, Shield, Timer, UserCheck } from 'lucide-react';
+import { Clock, HelpCircle, Lightbulb, Phone, Shield, Timer, UserCheck } from 'lucide-react';
 
 interface DecisionScreenProps {
   decision: DecisionConfig;
@@ -41,6 +42,20 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
     if (h.last && h.last !== letter) h.switches += 1;
     h.last = letter;
   };
+
+  // Yanlış karar riski: ekran açılınca bir kez hesaplanır (spec.md §9.1).
+  // Model yüklenemezse risk null kalır ve ekran v1'deki gibi görünür.
+  const [risk, setRisk] = useState<RiskSonucu | null>(null);
+  useEffect(() => {
+    let iptal = false;
+    setRisk(null);
+    riskHesapla(level, decision.stepNumber).then((r) => {
+      if (!iptal) setRisk(r);
+    });
+    return () => {
+      iptal = true;
+    };
+  }, [decision.key, level]);
 
   const rolePrefix = getRolePrefix(role);
   const isDecision1 = decision.key === 'karar1';
@@ -97,6 +112,34 @@ export const DecisionScreen: React.FC<DecisionScreenProps> = ({
               "{INCIDENT_INFO.text}"
             </p>
           </div>
+        </div>
+      )}
+
+      {/* Modelin ham çıktısı: parite testleri bunu okur */}
+      {risk && (
+        <span data-cy="p" data-testid="p-yanlis" hidden>
+          {risk.pYanlis.toFixed(6)}
+        </span>
+      )}
+
+      {/* Risk yüksekse kıdemli meslektaş Selin arar */}
+      {risk?.mudahale && (
+        <div
+          data-testid="selin-card"
+          className="rounded-2xl bg-[#16264A] border border-[#5CC8B0]/60 p-5 shadow-[0_4px_24px_rgba(92,200,176,0.12)] relative overflow-hidden animate-fadeIn"
+        >
+          <div className="absolute top-0 left-0 w-1.5 h-full bg-[#5CC8B0]" />
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-7 h-7 rounded-lg bg-[#5CC8B0]/15 text-[#5CC8B0] flex items-center justify-center">
+              <Phone className="w-4 h-4" />
+            </span>
+            <span className="font-mono text-xs uppercase tracking-wider text-[#5CC8B0] font-semibold">
+              Kıdemli meslektaşın Selin arıyor
+            </span>
+          </div>
+          <p data-testid="selin-text" className="text-sm sm:text-base text-[#D8E2FF] leading-relaxed">
+            "{SELIN_UYARILARI[decision.key]}"
+          </p>
         </div>
       )}
 

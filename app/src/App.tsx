@@ -9,6 +9,7 @@ import {
   oturumuKaydet,
   yeniOturumId,
 } from './veriToplama';
+import { modeliYukle } from './model/risk';
 import { DECISIONS } from './data/scenarioData';
 import { Header } from './components/Header';
 import { GirisScreen } from './components/GirisScreen';
@@ -38,6 +39,7 @@ export default function App() {
 
   useEffect(() => {
     if (VERI_MODU) oturumSayisiniGetir().then(setKayitliOturum);
+    modeliYukle(); // risk modelini oyun başlarken önceden yükle
   }, []);
 
   const kararKaydet = (key: DecisionKey, kararNo: number, letter: OptionLetter, isTimeout: boolean, meta?: DecisionMeta) => {

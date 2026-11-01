@@ -1,4 +1,4 @@
-import { DecisionConfig, Goal, Role } from '../types';
+import { DecisionConfig, DecisionKey, Goal, Role } from '../types';
 
 export const INCIDENT_INFO = {
   clock: '07:45',
@@ -123,4 +123,15 @@ export const GOAL_LEARNINGS: Record<Goal, string[]> = {
     'İhlal 72 saat içinde Kurul\'a bildirilir.',
     'Gizlemek, ihlalden daha ağır sonuç doğurur.',
   ],
+};
+
+// Risk modeli yüksek risk tahmin ettiğinde kıdemli meslektaş Selin arar (spec.md §9.1).
+// Kural (tutor ile aynı): seçeneği söylemez, "A", "B" ya da "doğru cevap" demez; düşündürür.
+export const SELIN_UYARILARI: Record<DecisionKey, string> = {
+  karar1:
+    'Bir dakika, acele etme. Sorun tam olarak ne zaman başladı ve o saatte sistemde ne değişmişti?',
+  karar2:
+    'Dur, bir şeyi kontrol et: Şikâyet eden tek doktor, ama bu hatadan gerçekte kaç hasta etkilenmiş olabilir? Canlı veriye dokunmadan önce neyi denemek istersin?',
+  karar3:
+    'Konuştuğumuz şey sağlık verisi. Böyle bir durumda yasal olarak kimin haberdar olması gerekiyor, hiç düşündün mü?',
 };
