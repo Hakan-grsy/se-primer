@@ -35,10 +35,21 @@ interface YukluModel {
 
 let yukleniyor: Promise<YukluModel | null> | null = null;
 
+// Geri dönüş anahtarı (RELEASE.md): VITE_MODEL_KAPALI=1 ile derlenirse model hiç
+// yüklenmez ve oyun v1 gibi çalışır. Testler için: ?model=kapali
+const MODEL_KAPALI =
+  import.meta.env.VITE_MODEL_KAPALI === '1' ||
+  (typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('model') === 'kapali');
+
 // Modeli bir kez yükler. Hata olursa null döner; oyun modelsiz (v1 gibi) devam eder.
 export function modeliYukle(): Promise<YukluModel | null> {
   if (!yukleniyor) {
     yukleniyor = (async () => {
+      if (MODEL_KAPALI) {
+        console.info('Risk modeli kapalı (geri dönüş anahtarı); oyun v1 gibi çalışıyor.');
+        return null;
+      }
       try {
         const r = await fetch(`${MODEL_BASE_URL}/config.json`);
         if (!r.ok) throw new Error(`config.json HTTP ${r.status}`);

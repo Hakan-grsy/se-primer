@@ -54,6 +54,23 @@ describe('v2 risk modeli: hata durumları', () => {
     cy.get('[data-testid="ending-good"]').should('be.visible');
   });
 
+  it('geri dönüş anahtarı: model kapalıyken model indirilmez, oyun v1 gibi biter', () => {
+    cy.intercept(/model\.onnx$/).as('onnx');
+    cy.visit('/?model=kapali');
+    cy.get('[data-testid="level-yeni-basladim"]').click();
+    cy.get('[data-testid="role-backend-gelistirici"]').click();
+    cy.get('[data-testid="goal-test-ve-kalite"]').click();
+    cy.get('[data-testid="start-button"]').click();
+    cy.get('[data-testid="kriz-start-button"]').click();
+    ['A', 'A', 'A'].forEach((secim, i) => {
+      cy.contains(`Karar ${i + 1}`).should('exist');
+      cy.get('[data-testid="selin-card"]').should('not.exist');
+      cy.choose(secim);
+    });
+    cy.get('[data-testid="ending-good"]').should('be.visible');
+    cy.get('@onnx.all').should('have.length', 0);
+  });
+
   it('veri toplama modu kapalıyken hiçbir oturum verisi gönderilmez (KVKK)', () => {
     cy.intercept('/api/oturum*').as('oturum');
     cy.startGame();
