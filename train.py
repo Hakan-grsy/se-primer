@@ -4,7 +4,7 @@ Kullanım (proje kökünden, tek komut):
     python train.py
 
 Ne yapar (spec.md §9):
-  1. data/oturumlar.csv dosyasını okur, her karar satırından 5 girdiyi üretir.
+  1. data/oturumlar.csv dosyasını okur, her karar satırından girdileri üretir (OZELLIKLER).
   2. Yalnızca kaynak=gercek satırlarla, oturum_id'ye göre gruplu 5 katlı çapraz
      doğrulama yapar ve ROC AUC hesaplar (pozitif sınıf: yanlış karar).
   3. AUC < KABUL_ESIGI ise hata koduyla durur; model dosyası üretilmez.
@@ -41,12 +41,12 @@ KAT_SAYISI = 5
 SEVIYE_KOD = {"Yeni başladım": 0, "Biraz deneyimim var": 1, "Deneyimliyim": 2}
 
 # Sıra önemli: model.onnx girdisi bu sırayla beklenir (config.json -> features).
+# Deneme 3 (spec.md §9.2, §9.6): onceki_yanlis_sayisi ve onceki_ort_sure_sn çıkarıldı.
+DENEME = 3
 OZELLIKLER = [
     ("seviye_kod", "Seviye (0 = Yeni başladım, 1 = Biraz deneyimim var, 2 = Deneyimliyim)"),
     ("karar_2", "Karar 2 mi? (0/1)"),
     ("karar_3", "Karar 3 mü? (0/1)"),
-    ("onceki_yanlis_sayisi", "Bu oturumda önceki yanlış karar sayısı"),
-    ("onceki_ort_sure_sn", "Önceki kararların ortalama süresi (sn); Karar 1'de 0"),
 ]
 
 
@@ -57,8 +57,6 @@ def girdi_vektoru(satir: dict) -> list[float]:
         float(SEVIYE_KOD[satir["seviye"]]),
         1.0 if karar_no == 2 else 0.0,
         1.0 if karar_no == 3 else 0.0,
-        float(satir["onceki_yanlis_sayisi"]),
-        float(satir["onceki_ort_sure_sn"]),
     ]
 
 
@@ -189,6 +187,8 @@ Pozitif katsayı, yanlış yapma olasılığını artırır.
 - Veri yalnızca {v['oyuncu_sayisi']} kişiden geliyor. Model bu kişilerin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
 - Veri çok az ({v['gercek_satir']} satır). Metrikler belirsizdir; yeni bir oyuncuyla değerler belirgin şekilde değişebilir.
 - Model yalnızca bu oyundaki 3 karar için anlamlıdır. Başka bir senaryoya taşınamaz.
+- Model büyük ölçüde "Karar 2 diğer kararlardan daha riskli" bilgisini taşır. Bu yüzden Selin kartı çoğunlukla Karar 2'de çıkar; oyuncunun davranışına göre kişiselleşme sınırlıdır.
+- Bu model {config['deneme']}. denemedir. İlk iki deneme kabul eşiğinin altında kaldı. Girdiler, önceki denemenin sonucuna bakılarak sadeleştirildi; ölçülen AUC bu yüzden biraz iyimser olabilir (bkz. `spec.md` §9.6).
 
 ## Kullanılmaması gereken durumlar
 - Gerçek bir kişiyi (öğrenci, çalışan, aday) değerlendirmek, notlandırmak ya da sıralamak.
@@ -248,6 +248,7 @@ def main():
             "oyuncu_sayisi": len(oyuncular),
             "yanlis_orani": round(float(y[gercek].mean()), 4),
         },
+        "deneme": DENEME,
         "seed": SEED,
         "sklearn_version": sklearn.__version__,
         "python_version": f"{sys.version_info.major}.{sys.version_info.minor}",

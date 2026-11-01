@@ -164,13 +164,15 @@ stateDiagram-v2
 - **Model:** Lojistik regresyon (`scikit-learn`), `random_state=42`. Veri az (72 satır) olduğu için az girdili, yorumlanabilir bir model seçildi.
 
 ### 9.2 Girdiler (sırası `config.json` ile sabitlenir)
-| # | Girdi | Nasıl hesaplanır |
-|---|---|---|
-| 1 | `seviye_kod` | Yeni başladım = 0, Biraz deneyimim var = 1, Deneyimliyim = 2 |
-| 2 | `karar_2` | Karar 2 ise 1, değilse 0 |
-| 3 | `karar_3` | Karar 3 ise 1, değilse 0 |
-| 4 | `onceki_yanlis_sayisi` | Bu oturumda önceki kararlardaki yanlış sayısı |
-| 5 | `onceki_ort_sure_sn` | Önceki kararların ortalama süresi (Karar 1'de 0) |
+| # | Girdi | Nasıl hesaplanır | Deneme 1–2 | Deneme 3 |
+|---|---|---|---|---|
+| 1 | `seviye_kod` | Yeni başladım = 0, Biraz deneyimim var = 1, Deneyimliyim = 2 | ✓ | ✓ |
+| 2 | `karar_2` | Karar 2 ise 1, değilse 0 | ✓ | ✓ |
+| 3 | `karar_3` | Karar 3 ise 1, değilse 0 | ✓ | ✓ |
+| 4 | `onceki_yanlis_sayisi` | Bu oturumda önceki kararlardaki yanlış sayısı | ✓ | — |
+| 5 | `onceki_ort_sure_sn` | Önceki kararların ortalama süresi (Karar 1'de 0) | ✓ | — |
+
+Deneme 3'te girdi 4 ve 5 çıkarıldı. Gerekçe ve bu kararın veriye bakılarak verildiği bilgisi §9.6'dadır.
 
 `rol` ve `hedef` girdi değildir: v1 spesifikasyonuna göre bunlar yalnızca anlatıyı ve tutor'u değiştirir, kararları değiştirmez (bkz. §4). Ölçülen ama girdi olmayan sütunlar (`karar_suresi_sn`, `tereddut_sayisi` vb.) veri setinde kalır ve sonraki sürümler için saklanır.
 
@@ -200,8 +202,15 @@ Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler aras
 | # | Tarih | Veri | ROC AUC (CV) | Brier (CV / taban) | Sonuç | Karar |
 |---|---|---|---|---|---|---|
 | 1 | 1 Kasım 2026 | 24 gerçek oturum (72 satır), 2 oyuncu | **0.5318** | 0.245 / 0.231 | ✗ Eşik altı, model üretilmedi. İkinci koşu aynı sayıları verdi. | Model ve girdiler aynı kalır. Daha fazla gerçek veri toplanır (yeni oyuncular: O3, O4, …). |
-| 2 | 1 Kasım 2026 | 44 gerçek oturum (132 satır), 4 oyuncu | **0.5829** | 0.228 / 0.227 | ✗ Eşik altı, model üretilmedi. | Karar bekliyor (bkz. aşağıdaki yorum). |
+| 2 | 1 Kasım 2026 | 44 gerçek oturum (132 satır), 4 oyuncu | **0.5829** | 0.228 / 0.227 | ✗ Eşik altı, model üretilmedi. | Deneme 3: girdiler sadeleştirilir, eşik aynı kalır. |
+| 3 | 1 Kasım 2026 | Deneme 2 ile aynı veri | _eğitimden sonra yazılacak_ | | | |
 
 **Deneme 1 yorumu:** Model, herkese aynı oranı veren taban modelden bile kötü (Brier 0.245 > 0.231). 72 satır, 5 girdili bir model için az. Model eğitim katlarındaki gürültüyü öğreniyor ve yeni oturumlara genellenemiyor. Eşiği düşürmek ya da girdileri sonuca bakarak değiştirmek yerine daha fazla gerçek veri toplamaya karar verildi.
 
 **Deneme 2 yorumu:** Veri neredeyse iki katına çıkınca AUC 0.53'ten 0.58'e yükseldi, ama eşik geçilemedi. Model hâlâ taban modelle aynı düzeyde (Brier 0.228 ≈ 0.227). Veride yanlış kararların büyük kısmı Karar 2'de (Karar 1: 8/44, Karar 2: 28/44, Karar 3: 10/44). Bu güçlü örüntüye rağmen modelin düşük kalması, diğer girdilerin (özellikle süresi dolan oyunlarda 60 sn'ye fırlayan `onceki_ort_sure_sn`) gürültü eklediğini düşündürüyor. Bu gözlem **veriye bakılarak** yapıldı. Girdiler bu gözleme göre değiştirilirse, bu durum deneme kaydında açıkça belirtilmelidir.
+
+**Deneme 3 tasarımı (eğitimden önce yazıldı):**
+- **Değişen:** Girdiler `seviye_kod`, `karar_2`, `karar_3` olarak sadeleştirildi (§9.2). `onceki_yanlis_sayisi` ve `onceki_ort_sure_sn` çıkarıldı.
+- **Değişmeyen:** Model türü (StandardScaler + LogisticRegression, tohum 42), değerlendirme yöntemi (oturuma göre gruplu 5 katlı CV, yalnızca gerçek veri), kabul eşiği (AUC ≥ 0.60) ve müdahale eşiği (0.50).
+- **Dürüstlük notu:** Bu sadeleştirme, Deneme 2'nin sonucuna ve veride Karar 2'nin belirgin şekilde zor olduğu gözlemine **bakılarak** seçildi. Aynı veride ikinci kez tasarım değiştirildiği için ölçülen AUC biraz iyimser olabilir. Modelin gerçek performansı, yeni oyunculardan gelecek veriyle yeniden ölçülmelidir.
+- **Beklenen davranış:** Model büyük ölçüde "Karar 2 diğerlerinden daha riskli" bilgisini taşır. Oyunda Selin kartı çoğunlukla Karar 2'de çıkacaktır. Bu, model kartında sınır olarak belirtilir.
