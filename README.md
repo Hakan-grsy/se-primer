@@ -5,7 +5,8 @@ YZM301 · Ödev 7. Geçen haftaki *SE Primer* oyununa (yanlış hastaya giden ta
 ## Linkler
 - **GitHub repo:** https://github.com/Hakan-grsy/se-primer
 - **Hugging Face modeli (commit'e sabit):** https://huggingface.co/Hakangrsy/se-primer-yanlis-karar-riski/tree/9b7ba463fd0fd4de4b98cbc52862cafebe189bfa
-- **Canlı uygulama:** _v2 yayınlanınca eklenecek_ (v1: https://ai.studio/apps/af5726e6-29ac-45ee-b4fb-c9c934d50b2c)
+- **Canlı uygulama (GitHub Pages):** https://hakan-grsy.github.io/se-primer/
+  Model tarayıcıda çalışır ve Hugging Face'teki sabit commit'ten indirilir. Sunucusuz yayın olduğu için AI tutor ve veri toplama burada kapalıdır; ikisi de yerel kurulumda çalışır. (v1, AI Studio: https://ai.studio/apps/af5726e6-29ac-45ee-b4fb-c9c934d50b2c)
 - **Demo video (60–90 sn):** _eklenecek_
 
 ## Kurulum (3 komut)
