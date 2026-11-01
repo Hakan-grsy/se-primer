@@ -10,6 +10,13 @@ YZM301 · Ödev 7. Geçen haftaki *SE Primer* oyununa (yanlış hastaya giden ta
 - **Demo video (66 sn):** https://youtube.com/shorts/AcckMgSWAvA (dosya: [e2e/cypress/videos/demo-v2-mobil.mp4](e2e/cypress/videos/demo-v2-mobil.mp4))
   Canlı sitede iki oyuncu aynı sahnelerden geçer. Ekrandaki risk değerleri modelden o an okunur. Video, bu sürümün sınırını da gösterir: Karar 2'de iki oyuncuya farklı risk hesaplanır (0.650 / 0.609), ama ikisi de eşiğin üstünde kaldığı için kart kararı aynıdır. Yeniden çekmek için: `npm --prefix e2e run test:demo2` (Cypress), sonra telefon ekranına kırpma (ffmpeg).
 
+## Başlangıç reposuyla ilişkisi
+Model, geçen haftaki SE Primer projesinin üzerine eklendi. Ödevin başlangıç reposu [seyyah/huggingface-hello-web](https://github.com/seyyah/huggingface-hello-web) örnek olarak kullanıldı, oradan alınanlar:
+- **`onnx_aktar` kontrolü:** ONNX çıktısının sklearn'den farkı 1e-4'ten küçük olmalı ([train.py](train.py) içindeki `onnx_aktar`).
+- **`model.onnx` + `config.json` sözleşmesi:** `features` sırası, `classes`, `metrics`; ONNX girdi/çıktı adları `input` ve `probabilities`, ZipMap kapalı.
+- **Model yapısı:** `StandardScaler` + `LogisticRegression` boru hattı.
+- **Web örneği:** Tarayıcıda `onnxruntime-web` ile çıkarım ([app/src/model/risk.ts](app/src/model/risk.ts)).
+
 ## Kurulum (3 komut)
 ```bash
 pip install -r requirements.txt
