@@ -193,3 +193,12 @@ stateDiagram-v2
 - Veri **yalnızca iki oyuncudan** geliyor (O1: 17 oturum, O2: 7 oturum; toplam 24 oturum, 72 satır). Model bu iki kişinin alışkanlıklarını öğrenir, genel oyuncu kitlesini temsil etmez.
 - Bazı durumlar veride az: süre 2 oturumda doldu (6 karar), tutor'a 6 kararda soru soruldu, "İpucu iste" düğmesi 4 kararda kullanıldı.
 - Model bir eğitim oyunu içindir. Gerçek bir kişiyi değerlendirmek ya da notlandırmak için kullanılmamalıdır.
+
+### 9.6 Eğitim günlüğü
+Her `python train.py` denemesi buraya yazılır. Eşikler (§9.3) denemeler arasında değiştirilmez.
+
+| # | Tarih | Veri | ROC AUC (CV) | Brier (CV / taban) | Sonuç | Karar |
+|---|---|---|---|---|---|---|
+| 1 | 1 Kasım 2026 | 24 gerçek oturum (72 satır), 2 oyuncu | **0.5318** | 0.245 / 0.231 | ✗ Eşik altı, model üretilmedi. İkinci koşu aynı sayıları verdi. | Model ve girdiler aynı kalır. Daha fazla gerçek veri toplanır (yeni oyuncular: O3, O4, …). |
+
+**Deneme 1 yorumu:** Model, herkese aynı oranı veren taban modelden bile kötü (Brier 0.245 > 0.231). 72 satır, 5 girdili bir model için az. Model eğitim katlarındaki gürültüyü öğreniyor ve yeni oturumlara genellenemiyor. Eşiği düşürmek ya da girdileri sonuca bakarak değiştirmek yerine daha fazla gerçek veri toplamaya karar verildi.
