@@ -87,6 +87,18 @@ npm --prefix e2e run test:e2e                 # uygulama localhost:3000'de çal�
 ```
 Sonra bu dosyaya yeni sürümün bölümü eklenir ve uygulama yayınlanır. Dağıtım, yukarıdaki gölge → kanarya → kademeli sırasıyla yapılır.
 
+## Kaynaklar ve hangi kararı etkiledikleri
+| Kaynak | Bu projede nerede kullanıldı |
+|---|---|
+| Amershi, S. vd. (2019). *Software Engineering for Machine Learning: A Case Study.* ICSE-SEIP. | ML'nin düz bir çizgi değil, veri toplama → eğitim → değerlendirme → dağıtım → izleme olarak dönen bir döngü olduğu fikri. Veri toplama modu, eğitim günlüğü ([spec.md §9.6](spec.md)) ve gölge dağıtımda yeni veriyle yeniden ölçme planı bu döngüye göre kuruldu. |
+| Shankar, S. vd. (2022). *Operationalizing Machine Learning: An Interview Study.* | Üretimdeki ML'nin üç temel sorunu: **Velocity** (hız), **Validation** (doğrulama), **Versioning** (sürümleme). Hız: tek komutluk `train.py` ve yayın betiği. Doğrulama: eğitimden önce yazılan AUC eşiği ve eşik altında duran eval kapısı. Sürümleme: HF'te `v2.0` etiketi, commit'e sabit URL ve [yayin.json](yayin.json) sürüm geçmişi. |
+| Mitchell, M. vd. (2019). *Model Cards for Model Reporting.* FAT\*. | [model/README.md](model/README.md) model kartının yapısı: amaç, veri, değerlendirme, sınırlar ve kullanılmaması gereken durumlar. Kart `train.py` tarafından metriklerle birlikte üretilir, böylece rakamlar elle yazılmaz ve eskimez. |
+| Breck, E. vd. (2017). *The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction.* IEEE Big Data. | Eğitimin tekrarlanabilir olması (sabit tohum; iki koşuda birebir aynı dosyalar), model kalitesinin yayından önce doğrulanması (eval kapısı), eğitim ile kullanım arasında aynı girdilerin hesaplanması (train/serve skew; parite testi ve `config.json`'daki girdi sırası), kanarya ile devreye alma ve hızlı geri dönüş (bu dosyadaki plan ve geri dönüş anahtarı). |
+| Sommerville, I. *Software Engineering*, 10. baskı: Bl. 8 (Yazılım Testi), Bl. 25 (Konfigürasyon Yönetimi). | Bl. 8: regresyon testleri (geçen haftanın 16 E2E testi model eklendikten sonra aynen koşar) ve test otomasyonu. Bl. 25: sürüm yönetimi; yayınlanmış bir sürümün üzerine yazılmaması, düzeltmenin yeni sürüm olarak çıkması kuralı. |
+| Ders sunumu: *Modelden Ürüne: Yapay Zekâ* ve *Yazılım Testi Tartışması* (30 Ekim 2026). | Diferansiyel test (iki farklı sistemde aynı girdi → aynı çıktı), test kahini (Python oracle), hata toleransı (1e-4) ve gölge/kanarya/kademeli dağıtım kavramları. Küçük, göreve özel model seçiminin gerekçesi (derste aktarılan Stanford AI Index 2025 ve Gartner 2025 çıkarım maliyeti öngörüleri). |
+| `huggingface-hello-web` başlangıç reposu (`hf_cli.py`). | `model.onnx` + `config.json` sözleşmesi, ONNX girdi/çıktı adları (`input`, `probabilities`), ZipMap'in kapatılması ve ONNX–sklearn farkının 1e-4 ile kontrolü (`onnx_aktar`). `train.py` bu sözleşmeye uyar. |
+| Araç belgeleri: Hugging Face Hub (`revision`, `resolve` URL'leri), ONNX Runtime (`onnxruntime-web`), `skl2onnx`, Cypress. | Commit'e sabit indirme adresi, tarayıcıda çıkarım, sklearn → ONNX dönüşümü ve E2E testleri. |
+
 ## Bilinen sınırlar (v2.0)
 - Veri 4 kişiden geliyor (44 oturum). Model bu kişilerin alışkanlıklarını öğrenir.
 - Ölçülen AUC (0.62) eşiğin hemen üstünde. Girdiler önceki denemeye bakılarak seçildiği için biraz iyimser olabilir. Gölge dağıtımda yeni oyuncularla yeniden ölçülmeli.

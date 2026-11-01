@@ -56,6 +56,9 @@ npm --prefix e2e run test:e2e    # 24 test: 8 yol, 8 kabul örneği, 6 model reg
 | [app/](app/) | Oyunun kaynak kodu (React + Express) |
 | [DESIGN.md](DESIGN.md), [design/](design/), [ai-studio/](ai-studio/), [eval/](eval/) | v1: tasarım, AI Studio prompt'ları, tutor değerlendirmesi |
 
+## Kaynaklar
+Kararların dayandığı kaynaklar ve her birinin projede nerede kullanıldığı: [RELEASE.md → Kaynaklar](RELEASE.md#kaynaklar-ve-hangi-kararı-etkiledikleri). Başlıcaları: Amershi vd. (2019), Shankar vd. (2022), Mitchell vd. (2019), Breck vd. (2017), Sommerville (10. baskı, Bl. 8 ve 25).
+
 ## Araç kullanımı ve elle düzeltmeler
 **Kullanılan araçlar:**
 - **Claude Code (Claude Opus 5.5):** Veri toplama modu, `train.py`, parite ve regresyon testleri, Hugging Face yayın betiği ve `RELEASE.md` taslağı. `SINAV_TASARIMI.md`'nin metni de bu araçla yazıldı; senaryo, soru türü ve çeldirici benim seçimim.
